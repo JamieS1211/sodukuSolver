@@ -41,7 +41,7 @@ int main() {
     int ***p = NULL; // stored as p[column][row][suggestions]
 
     FILE *fp;
-    fp = fopen("testSudoku7.txt", "r");
+    fp = fopen("testSudoku9.txt", "r");
 
 
     p = xmalloc(size * sizeof(*p));
@@ -96,6 +96,7 @@ int main() {
         if (count > 20) {
             printf("Unable to solve the sudoku entered, will print current progress. Program will end. \n");
             printSudokuWithSugestions(p);
+            printSudokuBig(p);
             return 1;
         }
 
@@ -235,7 +236,7 @@ void findPairCellsInRow(int ***p, int row) {
                             }
                         }
                     } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
-                        int count = 0; //The number of values that must occupy one of thease two cells
+                        int count = 0; //The number of values that must occupy one of these two cells
 
                         for (int option = 0; option <= size; option++) {
                             if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
@@ -245,10 +246,10 @@ void findPairCellsInRow(int ***p, int row) {
 
                         if (count == 2) {
                             for (int option = 1; option <= size; option++) {
-                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
+                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
                                     eliminatePossibleFromRow(p, columnA, row, option);
                                     setIfPossible(p, columnB, row, option, 1);
-                                } else if (valuesElsewhere[option] == 1 && valuesElsewhereCalculated[option] == 1) {
+                                } else { // Remove suggestions for other values in these cells
                                     setIfPossible(p, columnA, row, option, 0);
                                     setIfPossible(p, columnB, row, option, 0);
                                 }
@@ -264,6 +265,7 @@ void findPairCellsInRow(int ***p, int row) {
 
 void findPairCellsInColumn(int ***p, int column) {
 
+    //TODO Change for block
     for (int rowA = 0; rowA < size; rowA++) {
         for (int rowB = 0; rowB < size; rowB++) {
             // Only run each option once
@@ -307,7 +309,7 @@ void findPairCellsInColumn(int ***p, int column) {
                             }
                         }
                     } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
-                        int count = 0; //The number of values that must occupy one of thease two cells
+                        int count = 0; //The number of values that must occupy one of these two cells
 
                         for (int option = 0; option <= size; option++) {
                             if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
@@ -317,10 +319,10 @@ void findPairCellsInColumn(int ***p, int column) {
 
                         if (count == 2) {
                             for (int option = 1; option <= size; option++) {
-                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
-                                    eliminatePossibleFromRow(p, column, rowA, option);
+                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
+                                    eliminatePossibleFromColumn(p, column, rowA, option);
                                     setIfPossible(p, column, rowB, option, 1);
-                                } else if (valuesElsewhere[option] == 1 && valuesElsewhereCalculated[option] == 1) {
+                                } else { // Remove suggestions for other values in these cells
                                     setIfPossible(p, column, rowA, option, 0);
                                     setIfPossible(p, column, rowB, option, 0);
                                 }
