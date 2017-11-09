@@ -83,6 +83,15 @@
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/main.c">
 			<Option target="sudokuSolver"/>
 		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/main.h">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/printFunctions.c">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/printFunctions.h">
+			<Option target="sudokuSolver"/>
+		</Unit>
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/solveFunctions.c">
 			<Option target="sudokuSolver"/>
 		</Unit>

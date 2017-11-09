@@ -9,10 +9,6 @@ void eliminatePossibleFromRow(int ***p, int column, int row, int number);
 void eliminatePossibleFromColumn(int ***p, int column, int row, int number);
 void eliminatePossibleFromBlock(int ***p, int column, int row, int number);
 
-void findPairCellsInRow(int ***p, int row);
-void findPairCellsInColumn(int ***p, int column);
-void findPairCellsInBlock(int ***p, int columnStart, int rowStart);
-
 int cellsWithSuggestionInRow(int ***p, int row, int number);
 int cellsWithSuggestionInColumn(int ***p, int column, int number);
 int cellsWithSuggestionInBlock(int ***p, int column, int row, int number);
@@ -21,6 +17,3 @@ int findFinalCellValue(int ***p, int column, int row);
 
 
 void * xmalloc(size_t n);
-void printSudoku(int ***p);
-void printSudokuBig(int ***p);
-void printSudokuWithSugestions(int ***p);

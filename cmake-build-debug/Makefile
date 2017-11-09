@@ -150,6 +150,33 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/main.c.s
 .PHONY : main.c.s
 
+printFunctions.o: printFunctions.c.o
+
+.PHONY : printFunctions.o
+
+# target to build an object file
+printFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/printFunctions.c.o
+.PHONY : printFunctions.c.o
+
+printFunctions.i: printFunctions.c.i
+
+.PHONY : printFunctions.i
+
+# target to preprocess a source file
+printFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/printFunctions.c.i
+.PHONY : printFunctions.c.i
+
+printFunctions.s: printFunctions.c.s
+
+.PHONY : printFunctions.s
+
+# target to generate assembly for a file
+printFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/printFunctions.c.s
+.PHONY : printFunctions.c.s
+
 solveFunctions.o: solveFunctions.c.o
 
 .PHONY : solveFunctions.o
@@ -189,6 +216,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... printFunctions.o"
+	@echo "... printFunctions.i"
+	@echo "... printFunctions.s"
 	@echo "... solveFunctions.o"
 	@echo "... solveFunctions.i"
 	@echo "... solveFunctions.s"

@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <time.h>
 
 #include "config.h"
 #include "solveFunctions.h"
+#include "printFunctions.h"
 
 int invalid(int ***p);
 int isComplete(int ***p);
-
 
 void fillPossible(int ***p, int column, int row);
 void setOnlyPossible(int ***p, int column, int row, int number);
@@ -27,11 +26,7 @@ int cellsWithSuggestionInBlock(int ***p, int column, int row, int number);
 
 int findFinalCellValue(int ***p, int column, int row);
 
-
 void * xmalloc(size_t n);
-void printSudoku(int ***p);
-void printSudokuBig(int ***p);
-void printSudokuWithSugestions(int ***p);
 
 
 int main() {
@@ -96,7 +91,7 @@ int main() {
 
         if (count > 20) {
             printf("Unable to solve the sudoku entered, will print current progress. Program will end. \n");
-            printSudokuWithSugestions(p);
+            printSudokuWithSuggestions(p);
             printSudokuBig(p);
             return 1;
         }
@@ -111,11 +106,9 @@ int main() {
 
         solveSuggestionBlockLines(p);
 
-        //TODO sudoku 7 column 8 rows 4 and 8 1 8 pair
         solvePairs(p);
 
         count++;
-
     }
 
     printf("Stage %i:\n\n", count);
@@ -190,239 +183,6 @@ void eliminatePossibleFromBlock(int ***p, int column, int row, int number) {
     }
 
     setIfPossible(p, column, row, number, 1);
-}
-
-//TODO check for x cells in a row, column or block that have the same x numbers in each. Eleminaate those x numbers from all other cells in the row column or block.
-void findPairCellsInRow(int ***p, int row) {
-
-    for (int columnA = 0; columnA < size; columnA++) {
-        for (int columnB = 0; columnB < size; columnB++) {
-            // Only run each option once
-            if (columnA < columnB) {
-
-                // If both cells are not yet solved
-                if (findFinalCellValue(p, columnA, row) == 0 && findFinalCellValue(p, columnB, row) == 0) {
-
-                    int valuesAbsentTogether = 0;
-                    int valuesPresentTogether = 0;
-                    int valuesElsewhereCalculated[size + 1];
-                    int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
-
-                    for (int option = 1; option <= size; option++) {
-                        valuesElsewhereCalculated[option] = 0;
-                        valuesElsewhere[option] = 0;
-                    }
-
-                    // for every option if both cells have that value possible add to values that match.
-                    for (int option = 1; option <= size; option++) {
-                        if ((p[columnA][row][option] == 1) && (p[columnB][row][option] == 1)) {
-                            valuesPresentTogether++;
-                            valuesElsewhereCalculated[option] = 1;
-
-                            if (cellsWithSuggestionInRow(p, row, option) > 2) {
-                                valuesElsewhere[option] = 1;
-                            }
-                        } else if ((p[columnA][row][option] == 0) && (p[columnB][row][option] == 0)) {
-                            valuesAbsentTogether++;
-                        }
-                    }
-
-                    // Cells are are identical
-                    if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
-
-                        for (int option = 1; option <= size; option++) {
-                            if (p[columnA][row][option] == 1 && p[columnB][row][option] == 1) {
-                                eliminatePossibleFromRow(p, columnA, row, option);
-                                setIfPossible(p, columnB, row, option, 1);
-                            }
-                        }
-                    } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
-                        int count = 0; //The number of values that must occupy one of these two cells
-
-                        for (int option = 0; option <= size; option++) {
-                            if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
-                                count++;
-                            }
-                        }
-
-                        if (count == 2) {
-                            for (int option = 1; option <= size; option++) {
-                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
-                                    eliminatePossibleFromRow(p, columnA, row, option);
-                                    setIfPossible(p, columnB, row, option, 1);
-                                } else { // Remove suggestions for other values in these cells
-                                    setIfPossible(p, columnA, row, option, 0);
-                                    setIfPossible(p, columnB, row, option, 0);
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-    }
-}
-
-void findPairCellsInColumn(int ***p, int column) {
-
-    //TODO Change for block
-    for (int rowA = 0; rowA < size; rowA++) {
-        for (int rowB = 0; rowB < size; rowB++) {
-            // Only run each option once
-            if (rowA < rowB) {
-
-                // If both cells are not yet solved
-                if (findFinalCellValue(p, column, rowA) == 0 && findFinalCellValue(p, column, rowB) == 0) {
-
-                    int valuesAbsentTogether = 0;
-                    int valuesPresentTogether = 0;
-                    int valuesElsewhereCalculated[size + 1];
-                    int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
-
-                    for (int option = 1; option <= size; option++) {
-                        valuesElsewhereCalculated[option] = 0;
-                        valuesElsewhere[option] = 0;
-                    }
-
-
-                    // for every option if both cells have that value possible add to values that match.
-                    for (int option = 1; option <= size; option++) {
-                        if ((p[column][rowA][option] == 1) && (p[column][rowB][option] == 1)) {
-                            valuesPresentTogether++;
-                            valuesElsewhereCalculated[option] = 1;
-
-                            if (cellsWithSuggestionInColumn(p, column, option) > 2) {
-                                valuesElsewhere[option] = 1;
-                            }
-                        } else if ((p[column][rowA][option] == 0) && (p[column][rowB][option] == 0)) {
-                            valuesAbsentTogether++;
-                        }
-                    }
-
-                    // Cells are are identical
-                    if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
-
-                        for (int option = 1; option <= size; option++) {
-                            if (p[column][rowA][option] == 1 && p[column][rowB][option] == 1) {
-                                eliminatePossibleFromColumn(p, column, rowA, option);
-                                setIfPossible(p, column, rowB, option, 1);
-                            }
-                        }
-                    } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
-                        int count = 0; //The number of values that must occupy one of these two cells
-
-                        for (int option = 0; option <= size; option++) {
-                            if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
-                                count++;
-                            }
-                        }
-
-                        if (count == 2) {
-                            for (int option = 1; option <= size; option++) {
-                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
-                                    eliminatePossibleFromColumn(p, column, rowA, option);
-                                    setIfPossible(p, column, rowB, option, 1);
-                                } else { // Remove suggestions for other values in these cells
-                                    setIfPossible(p, column, rowA, option, 0);
-                                    setIfPossible(p, column, rowB, option, 0);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-void findPairCellsInBlock(int ***p, int columnStart, int rowStart) {
-
-    // Find row and column address for top left cell in block
-    int r = rowStart - (rowStart % sizeRoot);
-    int c = columnStart - (columnStart % sizeRoot);
-
-    for (int columnAOffset = 0; columnAOffset < sizeRoot; columnAOffset++) {
-        for (int rowAOffset = 0; rowAOffset < sizeRoot; rowAOffset++) {
-
-            int columnA = c + columnAOffset;
-            int rowA = r + rowAOffset;
-
-            for (int columnBOffset = 0; columnBOffset < sizeRoot; columnBOffset++) {
-                for (int rowBOffset = 0; rowBOffset < sizeRoot; rowBOffset++) {
-
-                    int columnB = c + columnBOffset;
-                    int rowB = r + rowBOffset;
-
-
-                    if (columnA < columnB || rowA < rowB) {
-
-                        // If both cells are not yet solved
-                        if (findFinalCellValue(p, columnA, rowA) == 0 && findFinalCellValue(p, columnB, rowB) == 0) {
-
-                            int valuesAbsentTogether = 0;
-                            int valuesPresentTogether = 0;
-                            int valuesElsewhereCalculated[size + 1];
-                            int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
-
-                            for (int option = 1; option <= size; option++) {
-                                valuesElsewhereCalculated[option] = 0;
-                                valuesElsewhere[option] = 0;
-                            }
-
-
-                            // for every option if both cells have that value possible add to values that match.
-                            for (int option = 1; option <= size; option++) {
-                                if ((p[columnA][rowA][option] == 1) && (p[columnB][rowB][option] == 1)) {
-                                    valuesPresentTogether++;
-                                    valuesElsewhereCalculated[option] = 1;
-
-                                    if (cellsWithSuggestionInBlock(p, columnA, rowA, option) > 2) {
-                                        valuesElsewhere[option] = 1;
-                                    }
-                                } else if ((p[columnA][rowA][option] == 0) && (p[columnB][rowB][option] == 0)) {
-                                    valuesAbsentTogether++;
-                                }
-                            }
-
-                            // Cells are are identical
-                            if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
-
-                                for (int option = 1; option <= size; option++) {
-                                    if (p[columnA][rowA][option] == 1 && p[columnB][rowB][option] == 1) {
-                                        eliminatePossibleFromBlock(p, columnA, rowA, option);
-                                        setIfPossible(p, columnB, rowB, option, 1);
-                                    }
-                                }
-                            } else if (valuesPresentTogether >=
-                                       2) { //If values share 2 or more values but 2 of those values can only exist in that one place
-                                int count = 0; //The number of values that must occupy one of thease two cells
-
-                                for (int option = 0; option <= size; option++) {
-                                    if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
-                                        count++;
-                                    }
-                                }
-
-                                if (count == 2) {
-                                    for (int option = 1; option <= size; option++) {
-                                        if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] ==
-                                                                            1) { // Remove thease numbers from being suggestions elsewhere
-                                            eliminatePossibleFromBlock(p, columnA, rowA, option);
-                                            setIfPossible(p, columnB, rowB, option, 1);
-                                        } else { // Remove suggestions for other values in thease cells
-                                            setIfPossible(p, columnA, rowA, option, 0);
-                                            setIfPossible(p, columnB, rowB, option, 0);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 // Returns amount of cells in the column with the suggestion.
@@ -533,136 +293,4 @@ void * xmalloc(size_t n) {
         exit(1);
     }
     return p;
-}
-
-void printSudoku(int ***p) {
-    int value;
-    for (int row = 0; row < size; row ++){
-        if (row % 3 == 0) {
-            printf("==================================================\n");
-        } else {
-            printf("¦¦----+----+----¦¦----+----+----¦¦----+----+----¦¦\n");
-        }
-        for (int column = 0; column < size; column++) {
-            if (column % 3 == 0) {
-                printf("¦¦");
-            } else {
-                printf("¦");
-            }
-
-            value = findFinalCellValue(p, column, row);
-
-            if (value == 0) {
-                printf("    ");
-            } else {
-                printf(" %i  ", value);
-            }
-        }
-        printf("¦¦ \n");
-    }
-    printf("==================================================\n\n\n");
-}
-
-
-void printSudokuBig(int ***p) {
-    for (int row = 0; row < size; row ++) {
-
-        if (row % 3 == 0) {
-            printf("===============================================================================================\n");
-        } else {
-            printf("¦¦---------+---------+---------¦¦---------+---------+---------¦¦---------+---------+---------¦¦\n");
-        }
-
-        for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
-
-            for (int column = 0; column < size; column++) {
-
-                int cellValue = findFinalCellValue(p, column, row);
-
-                if (column % 3 == 0) {
-                    printf("¦¦");
-                } else {
-                    printf("¦");
-                }
-
-                for (int commentColumn = 0; commentColumn < sizeRoot; commentColumn++) {
-
-                    int valueToCheck = 1 + (sizeRoot * commentRow) + commentColumn;
-
-                    if (cellValue == 0) {
-                        printf("   ");
-                    } else {
-                        if (((1 + size) / 2) == valueToCheck) {
-                            printf(" %i ", cellValue);
-                        } else {
-                            printf("   ");
-                        }
-                    }
-                }
-
-            }
-            printf("¦¦\n");
-        }
-    }
-
-
-    printf("===============================================================================================\n\n\n");
-}
-
-
-void printSudokuWithSugestions(int ***p) {
-
-    //return;
-
-    printf("Start of sudoku with hits \n");
-
-
-    for (int row = 0; row < size; row ++) {
-
-        if (row % 3 == 0) {
-            printf("===============================================================================================\n");
-        } else {
-            printf("¦¦---------+---------+---------¦¦---------+---------+---------¦¦---------+---------+---------¦¦\n");
-        }
-
-        for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
-
-            for (int column = 0; column < size; column++) {
-
-                int cellValue = findFinalCellValue(p, column, row);
-
-                if (column % 3 == 0) {
-                    printf("¦¦");
-                } else {
-                    printf("¦");
-                }
-
-                for (int commentColumn = 0; commentColumn < sizeRoot; commentColumn++) {
-
-                    int valueToCheck = 1 + (sizeRoot * commentRow) + commentColumn;
-
-                    if (cellValue == 0) {
-                        if (p[column][row][valueToCheck] == 1) {
-                            printf(" %i ", valueToCheck);
-                        } else {
-                            printf("   ");
-                        }
-                    } else {
-                        if (((1 + size) / 2) == valueToCheck) {
-                            printf(" %i ", cellValue);
-                        } else {
-                            printf("   ");
-                        }
-                    }
-                }
-
-            }
-            printf("¦¦\n");
-        }
-    }
-
-
-    printf("===============================================================================================\n\n\n");
-
-    printf("\n end of sudoku with hits \n");
 }

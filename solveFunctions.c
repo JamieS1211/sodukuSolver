@@ -2,7 +2,6 @@
 // Created by Jamie on 27/10/2017.
 //
 #include <stdio.h>
-#include <math.h>
 #include "config.h"
 #include "main.h"
 
@@ -201,17 +200,252 @@ void solveSuggestionBlockLines(int ***p) {
 void solvePairs(int ***p) {
 
     for (int column = 0; column < size; column++) {
-        findPairCellsInColumn(p, column);
+        solvePairCellsInColumn(p, column);
     }
 
     for (int row = 0; row < size; row++) {
-        findPairCellsInRow(p, row);
+        solvePairCellsInRow(p, row);
     }
 
     for (int leftColumn = 0; leftColumn < size; leftColumn = leftColumn + sizeRoot) {
         for (int topRow = 0; topRow < size; topRow = topRow + sizeRoot) {
             // For every top left cell of a block
-            findPairCellsInBlock(p, leftColumn, topRow);
+            solvePairCellsInBlock(p, leftColumn, topRow);
+        }
+    }
+}
+
+
+//TODO check for x cells in a row, column or block that have the same x numbers in each. Eliminate those x numbers from all other cells in the row column or block.
+void solvePairCellsInRow(int ***p, int row) {
+
+    for (int columnA = 0; columnA < size; columnA++) {
+        for (int columnB = 0; columnB < size; columnB++) {
+            // Only run each option once
+            if (columnA < columnB) {
+
+                // If both cells are not yet solved
+                if (findFinalCellValue(p, columnA, row) == 0 && findFinalCellValue(p, columnB, row) == 0) {
+
+                    int valuesAbsentTogether = 0;
+                    int valuesPresentTogether = 0;
+                    int valuesElsewhereCalculated[size + 1];
+                    int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
+
+                    for (int option = 1; option <= size; option++) {
+                        valuesElsewhereCalculated[option] = 0;
+                        valuesElsewhere[option] = 0;
+                    }
+
+                    // for every option if both cells have that value possible add to values that match.
+                    for (int option = 1; option <= size; option++) {
+                        if ((p[columnA][row][option] == 1) && (p[columnB][row][option] == 1)) {
+                            valuesPresentTogether++;
+                            valuesElsewhereCalculated[option] = 1;
+
+                            if (cellsWithSuggestionInRow(p, row, option) > 2) {
+                                valuesElsewhere[option] = 1;
+                            }
+                        } else if ((p[columnA][row][option] == 0) && (p[columnB][row][option] == 0)) {
+                            valuesAbsentTogether++;
+                        }
+                    }
+
+                    // Cells are are identical
+                    if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
+
+                        for (int option = 1; option <= size; option++) {
+                            if (p[columnA][row][option] == 1 && p[columnB][row][option] == 1) {
+                                eliminatePossibleFromRow(p, columnA, row, option);
+                                setIfPossible(p, columnB, row, option, 1);
+                            }
+                        }
+                    } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
+                        int count = 0; //The number of values that must occupy one of these two cells
+
+                        for (int option = 0; option <= size; option++) {
+                            if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
+                                count++;
+                            }
+                        }
+
+                        if (count == 2) {
+                            for (int option = 1; option <= size; option++) {
+                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
+                                    eliminatePossibleFromRow(p, columnA, row, option);
+                                    setIfPossible(p, columnB, row, option, 1);
+                                } else { // Remove suggestions for other values in these cells
+                                    setIfPossible(p, columnA, row, option, 0);
+                                    setIfPossible(p, columnB, row, option, 0);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+//TODO check for x cells in a row, column or block that have the same x numbers in each. Eliminate those x numbers from all other cells in the row column or block.
+void solvePairCellsInColumn(int ***p, int column) {
+
+    for (int rowA = 0; rowA < size; rowA++) {
+        for (int rowB = 0; rowB < size; rowB++) {
+            // Only run each option once
+            if (rowA < rowB) {
+
+                // If both cells are not yet solved
+                if (findFinalCellValue(p, column, rowA) == 0 && findFinalCellValue(p, column, rowB) == 0) {
+
+                    int valuesAbsentTogether = 0;
+                    int valuesPresentTogether = 0;
+                    int valuesElsewhereCalculated[size + 1];
+                    int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
+
+                    for (int option = 1; option <= size; option++) {
+                        valuesElsewhereCalculated[option] = 0;
+                        valuesElsewhere[option] = 0;
+                    }
+
+
+                    // for every option if both cells have that value possible add to values that match.
+                    for (int option = 1; option <= size; option++) {
+                        if ((p[column][rowA][option] == 1) && (p[column][rowB][option] == 1)) {
+                            valuesPresentTogether++;
+                            valuesElsewhereCalculated[option] = 1;
+
+                            if (cellsWithSuggestionInColumn(p, column, option) > 2) {
+                                valuesElsewhere[option] = 1;
+                            }
+                        } else if ((p[column][rowA][option] == 0) && (p[column][rowB][option] == 0)) {
+                            valuesAbsentTogether++;
+                        }
+                    }
+
+                    // Cells are are identical
+                    if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
+
+                        for (int option = 1; option <= size; option++) {
+                            if (p[column][rowA][option] == 1 && p[column][rowB][option] == 1) {
+                                eliminatePossibleFromColumn(p, column, rowA, option);
+                                setIfPossible(p, column, rowB, option, 1);
+                            }
+                        }
+                    } else if (valuesPresentTogether >= 2) { //If values share 2 or more values but 2 of those values can only exist in that one place
+                        int count = 0; //The number of values that must occupy one of these two cells
+
+                        for (int option = 0; option <= size; option++) {
+                            if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
+                                count++;
+                            }
+                        }
+
+                        if (count == 2) {
+                            for (int option = 1; option <= size; option++) {
+                                if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) { // Remove these numbers from being suggestions elsewhere
+                                    eliminatePossibleFromColumn(p, column, rowA, option);
+                                    setIfPossible(p, column, rowB, option, 1);
+                                } else { // Remove suggestions for other values in these cells
+                                    setIfPossible(p, column, rowA, option, 0);
+                                    setIfPossible(p, column, rowB, option, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//TODO check for x cells in a row, column or block that have the same x numbers in each. Eliminate those x numbers from all other cells in the row column or block.
+void solvePairCellsInBlock(int ***p, int columnStart, int rowStart) {
+
+    // Find row and column address for top left cell in block
+    int r = rowStart - (rowStart % sizeRoot);
+    int c = columnStart - (columnStart % sizeRoot);
+
+    for (int columnAOffset = 0; columnAOffset < sizeRoot; columnAOffset++) {
+        for (int rowAOffset = 0; rowAOffset < sizeRoot; rowAOffset++) {
+
+            int columnA = c + columnAOffset;
+            int rowA = r + rowAOffset;
+
+            for (int columnBOffset = 0; columnBOffset < sizeRoot; columnBOffset++) {
+                for (int rowBOffset = 0; rowBOffset < sizeRoot; rowBOffset++) {
+
+                    int columnB = c + columnBOffset;
+                    int rowB = r + rowBOffset;
+
+
+                    if (columnA < columnB || rowA < rowB) {
+
+                        // If both cells are not yet solved
+                        if (findFinalCellValue(p, columnA, rowA) == 0 && findFinalCellValue(p, columnB, rowB) == 0) {
+
+                            int valuesAbsentTogether = 0;
+                            int valuesPresentTogether = 0;
+                            int valuesElsewhereCalculated[size + 1];
+                            int valuesElsewhere[size + 1]; //True or false if a value can be in a place other then thease two cells
+
+                            for (int option = 1; option <= size; option++) {
+                                valuesElsewhereCalculated[option] = 0;
+                                valuesElsewhere[option] = 0;
+                            }
+
+
+                            // for every option if both cells have that value possible add to values that match.
+                            for (int option = 1; option <= size; option++) {
+                                if ((p[columnA][rowA][option] == 1) && (p[columnB][rowB][option] == 1)) {
+                                    valuesPresentTogether++;
+                                    valuesElsewhereCalculated[option] = 1;
+
+                                    if (cellsWithSuggestionInBlock(p, columnA, rowA, option) > 2) {
+                                        valuesElsewhere[option] = 1;
+                                    }
+                                } else if ((p[columnA][rowA][option] == 0) && (p[columnB][rowB][option] == 0)) {
+                                    valuesAbsentTogether++;
+                                }
+                            }
+
+                            // Cells are are identical
+                            if (valuesPresentTogether == 2 && valuesAbsentTogether == 7) {
+
+                                for (int option = 1; option <= size; option++) {
+                                    if (p[columnA][rowA][option] == 1 && p[columnB][rowB][option] == 1) {
+                                        eliminatePossibleFromBlock(p, columnA, rowA, option);
+                                        setIfPossible(p, columnB, rowB, option, 1);
+                                    }
+                                }
+                            } else if (valuesPresentTogether >=
+                                       2) { //If values share 2 or more values but 2 of those values can only exist in that one place
+                                int count = 0; //The number of values that must occupy one of thease two cells
+
+                                for (int option = 0; option <= size; option++) {
+                                    if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] == 1) {
+                                        count++;
+                                    }
+                                }
+
+                                if (count == 2) {
+                                    for (int option = 1; option <= size; option++) {
+                                        if (valuesElsewhere[option] == 0 && valuesElsewhereCalculated[option] ==
+                                                                            1) { // Remove thease numbers from being suggestions elsewhere
+                                            eliminatePossibleFromBlock(p, columnA, rowA, option);
+                                            setIfPossible(p, columnB, rowB, option, 1);
+                                        } else { // Remove suggestions for other values in thease cells
+                                            setIfPossible(p, columnA, rowA, option, 0);
+                                            setIfPossible(p, columnB, rowB, option, 0);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
