@@ -207,4 +207,11 @@ void solvePairs(int ***p) {
     for (int row = 0; row < size; row++) {
         findPairCellsInRow(p, row);
     }
+
+    for (int leftColumn = 0; leftColumn < size; leftColumn = leftColumn + sizeRoot) {
+        for (int topRow = 0; topRow < size; topRow = topRow + sizeRoot) {
+            // For every top left cell of a block
+            findPairCellsInBlock(p, leftColumn, topRow);
+        }
+    }
 }

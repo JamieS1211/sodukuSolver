@@ -11,6 +11,7 @@ void eliminatePossibleFromBlock(int ***p, int column, int row, int number);
 
 void findPairCellsInRow(int ***p, int row);
 void findPairCellsInColumn(int ***p, int column);
+void findPairCellsInBlock(int ***p, int columnStart, int rowStart);
 
 int cellsWithSuggestionInRow(int ***p, int row, int number);
 int cellsWithSuggestionInColumn(int ***p, int column, int number);
