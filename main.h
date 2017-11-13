@@ -15,5 +15,7 @@ int cellsWithSuggestionInBlock(int ***p, int column, int row, int number);
 
 int findFinalCellValue(int ***p, int column, int row);
 
+int areCellsIdenticle(int ***p, int columnA, int rowA, int columnB, int rowB);
+
 
 void * xmalloc(size_t n);

@@ -16,13 +16,11 @@ void eliminatePossibleFromRow(int ***p, int column, int row, int number);
 void eliminatePossibleFromColumn(int ***p, int column, int row, int number);
 void eliminatePossibleFromBlock(int ***p, int column, int row, int number);
 
-void findPairCellsInRow(int ***p, int row);
-void findPairCellsInColumn(int ***p, int column);
-void findPairCellsInBlock(int ***p, int columnStart, int rowStart);
-
 int cellsWithSuggestionInRow(int ***p, int row, int number);
 int cellsWithSuggestionInColumn(int ***p, int column, int number);
 int cellsWithSuggestionInBlock(int ***p, int column, int row, int number);
+
+int areCellsIdenticle(int ***p, int columnA, int rowA, int columnB, int rowB);
 
 int findFinalCellValue(int ***p, int column, int row);
 
@@ -37,7 +35,7 @@ int main() {
     int ***p = NULL; // stored as p[column][row][suggestions]
 
     FILE *fp;
-    fp = fopen("testSudoku9.txt", "r");
+    fp = fopen("testSudoku6.txt", "r");
 
 
     p = xmalloc(size * sizeof(*p));
@@ -84,8 +82,10 @@ int main() {
         if (invalid(p)) {
             printf("The sudoku you entered is invalid. Program will end.");    diff = clock() - start;
 
-            int msec = diff * 1000 / CLOCKS_PER_SEC;
-            printf("\nTime taken %d seconds %d milliseconds", msec/1000, msec%1000);
+            diff = clock() - start;
+
+            int microsec = diff/ CLOCKS_PER_SEC;
+            printf("\nTime taken %d microseconds",microsec);
             return 1;
         }
 
@@ -93,6 +93,10 @@ int main() {
             printf("Unable to solve the sudoku entered, will print current progress. Program will end. \n");
             printSudokuWithSuggestions(p);
             printSudokuBig(p);
+            diff = clock() - start;
+
+            int microsec = diff/ CLOCKS_PER_SEC;
+            printf("\nTime taken %d microseconds",microsec);
             return 1;
         }
 
@@ -107,6 +111,8 @@ int main() {
         solveSuggestionBlockLines(p);
 
         solvePairs(p);
+
+        solveXWing(p);
 
         count++;
     }
@@ -192,7 +198,7 @@ int cellsWithSuggestionInColumn(int ***p, int column, int number) {
     for (int row = 0; row < size; row++) {
         // Option is a possible value of this cell.
         if (findFinalCellValue(p, column, row) == number) {
-            return 0;
+            return -1;
         } else if (p[column][row][number] == 1) {
             possiblePlaces++;
         }
@@ -208,7 +214,7 @@ int cellsWithSuggestionInRow(int ***p, int row, int number) {
     for (int column = 0; column < size; column++) {
         // Option is a possible value of this cell.
         if (findFinalCellValue(p, column, row) == number) {
-            return 0;
+            return -1;
         } else if (p[column][row][number] == 1) {
             possiblePlaces++;
         }
@@ -259,6 +265,17 @@ int findFinalCellValue(int ***p, int column, int row) {
     } else {
         return value;
     }
+}
+
+// Returns if two cells have the same values / suggestions
+int areCellsIdenticle(int ***p, int columnA, int rowA, int columnB, int rowB) {
+    for (int option = 1; option <= size; option++) {
+        if (p[columnA][rowA][option] != p[columnB][rowB][option]) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 int invalid(int ***p) {
