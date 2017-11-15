@@ -123,6 +123,33 @@ sudokuSolver/fast:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/build
 .PHONY : sudokuSolver/fast
 
+advancedSolveFunctions.o: advancedSolveFunctions.c.o
+
+.PHONY : advancedSolveFunctions.o
+
+# target to build an object file
+advancedSolveFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/advancedSolveFunctions.c.o
+.PHONY : advancedSolveFunctions.c.o
+
+advancedSolveFunctions.i: advancedSolveFunctions.c.i
+
+.PHONY : advancedSolveFunctions.i
+
+# target to preprocess a source file
+advancedSolveFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/advancedSolveFunctions.c.i
+.PHONY : advancedSolveFunctions.c.i
+
+advancedSolveFunctions.s: advancedSolveFunctions.c.s
+
+.PHONY : advancedSolveFunctions.s
+
+# target to generate assembly for a file
+advancedSolveFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/advancedSolveFunctions.c.s
+.PHONY : advancedSolveFunctions.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -149,6 +176,33 @@ main.s: main.c.s
 main.c.s:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/main.c.s
 .PHONY : main.c.s
+
+patturnSolveFunctions.o: patturnSolveFunctions.c.o
+
+.PHONY : patturnSolveFunctions.o
+
+# target to build an object file
+patturnSolveFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/patturnSolveFunctions.c.o
+.PHONY : patturnSolveFunctions.c.o
+
+patturnSolveFunctions.i: patturnSolveFunctions.c.i
+
+.PHONY : patturnSolveFunctions.i
+
+# target to preprocess a source file
+patturnSolveFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/patturnSolveFunctions.c.i
+.PHONY : patturnSolveFunctions.c.i
+
+patturnSolveFunctions.s: patturnSolveFunctions.c.s
+
+.PHONY : patturnSolveFunctions.s
+
+# target to generate assembly for a file
+patturnSolveFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/patturnSolveFunctions.c.s
+.PHONY : patturnSolveFunctions.c.s
 
 printFunctions.o: printFunctions.c.o
 
@@ -177,32 +231,32 @@ printFunctions.c.s:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/printFunctions.c.s
 .PHONY : printFunctions.c.s
 
-solveFunctions.o: solveFunctions.c.o
+simpleSolveFunctions.o: simpleSolveFunctions.c.o
 
-.PHONY : solveFunctions.o
+.PHONY : simpleSolveFunctions.o
 
 # target to build an object file
-solveFunctions.c.o:
-	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/solveFunctions.c.o
-.PHONY : solveFunctions.c.o
+simpleSolveFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/simpleSolveFunctions.c.o
+.PHONY : simpleSolveFunctions.c.o
 
-solveFunctions.i: solveFunctions.c.i
+simpleSolveFunctions.i: simpleSolveFunctions.c.i
 
-.PHONY : solveFunctions.i
+.PHONY : simpleSolveFunctions.i
 
 # target to preprocess a source file
-solveFunctions.c.i:
-	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/solveFunctions.c.i
-.PHONY : solveFunctions.c.i
+simpleSolveFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/simpleSolveFunctions.c.i
+.PHONY : simpleSolveFunctions.c.i
 
-solveFunctions.s: solveFunctions.c.s
+simpleSolveFunctions.s: simpleSolveFunctions.c.s
 
-.PHONY : solveFunctions.s
+.PHONY : simpleSolveFunctions.s
 
 # target to generate assembly for a file
-solveFunctions.c.s:
-	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/solveFunctions.c.s
-.PHONY : solveFunctions.c.s
+simpleSolveFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/simpleSolveFunctions.c.s
+.PHONY : simpleSolveFunctions.c.s
 
 # Help Target
 help:
@@ -213,15 +267,21 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... sudokuSolver"
+	@echo "... advancedSolveFunctions.o"
+	@echo "... advancedSolveFunctions.i"
+	@echo "... advancedSolveFunctions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... patturnSolveFunctions.o"
+	@echo "... patturnSolveFunctions.i"
+	@echo "... patturnSolveFunctions.s"
 	@echo "... printFunctions.o"
 	@echo "... printFunctions.i"
 	@echo "... printFunctions.s"
-	@echo "... solveFunctions.o"
-	@echo "... solveFunctions.i"
-	@echo "... solveFunctions.s"
+	@echo "... simpleSolveFunctions.o"
+	@echo "... simpleSolveFunctions.i"
+	@echo "... simpleSolveFunctions.s"
 .PHONY : help
 
 

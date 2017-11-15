@@ -3,8 +3,10 @@
 #include <time.h>
 
 #include "config.h"
-#include "solveFunctions.h"
+#include "simpleSolveFunctions.h"
 #include "printFunctions.h"
+#include "advancedSolveFunctions.h"
+#include "patturnSolveFunctions.h"
 
 int invalid(int ***p);
 int isComplete(int ***p);
@@ -12,8 +14,11 @@ int isComplete(int ***p);
 void fillPossible(int ***p, int column, int row);
 void setOnlyPossible(int ***p, int column, int row, int number);
 void setIfPossible(int ***p, int column, int row, int number, int possible);
-void eliminatePossibleFromRow(int ***p, int column, int row, int number);
-void eliminatePossibleFromColumn(int ***p, int column, int row, int number);
+void eliminatePossibleFromRowExcept(int ***p, int column, int row, int number);
+void eliminatePossibleFromColumnExcept(int ***p, int column, int row, int number);
+void eliminatePossibleFromBlockExcept(int ***p, int column, int row, int number);
+void eliminatePossibleFromRow(int ***p, int row, int number);
+void eliminatePossibleFromColumn(int ***p, int column, int number);
 void eliminatePossibleFromBlock(int ***p, int column, int row, int number);
 
 int cellsWithSuggestionInRow(int ***p, int row, int number);
@@ -24,6 +29,12 @@ int areCellsIdenticle(int ***p, int columnA, int rowA, int columnB, int rowB);
 
 int findFinalCellValue(int ***p, int column, int row);
 
+int areCellsIdenticle(int ***p, int columnA, int rowA, int columnB, int rowB);
+
+int invalid(int ***p);
+
+int isComplete(int ***p);
+
 void * xmalloc(size_t n);
 
 
@@ -32,22 +43,52 @@ int main() {
 
     //TODO remove need for columns and size data and use global size info at all times.
     int options = size;
-    int ***p = NULL; // stored as p[column][row][suggestions]
+    int ***sudoku = NULL; // stored as sudoku[column][row][suggestions]
+    int ***sudokuTemp = NULL; // stored as sudoku[column][row][suggestions]
 
     FILE *fp;
-    fp = fopen("testSudoku6.txt", "r");
+    //fp = fopen("testSudoku11.txt", "r");
+    /**
+     * 1 - Shows column completion (naked single)
+     * 2 - Shows row completion (naked single)
+     * 3 - Shows block completion  (naked single)
+     *
+     * 4 - Shows column completion (hidden single)
+     * 5 - Shows row completion (hidden single)
+     * 6 - Shows block completion  (hidden single)
+     *
+     * 7 - Shows column completion (all suggestions in block of number are in same column)
+     * 8 - Shows row completion (all suggestions in block of number are in same row)
+     *
+     * 9 - Shows column completion (naked pair) [5,6 pair remove possibilities of 5 and 6 in last two rows of first column]
+     * 10 - Shows row completion (naked pair) [5,6 pair remove possibilities of 5 and 6 in last two columns of first row]
+     * 11 - Shows block completion  (naked pair) [5,6 pair remove possibilities of 5 and 6 being in last row of block]
+    */
 
 
-    p = xmalloc(size * sizeof(*p));
+
+    fp = fopen("realSudoku5.txt", "r");
+    /**
+     * 1 - Breezy
+     * 2 - Easy
+     * 3 - Medium
+     * 4 - Hard
+     */
+
+
+    sudoku = xmalloc(size * sizeof(*sudoku));
+    sudokuTemp = xmalloc(size * sizeof(*sudoku));
 
     for (int column = 0; column < size; column++) {
-        p[column] = xmalloc(size * sizeof(*p[column]));
+        sudoku[column] = xmalloc(size * sizeof(*sudoku[column]));
+        sudokuTemp[column] = xmalloc(size * sizeof(*sudokuTemp[column]));
 
         for (int row = 0; row < size; row++) {
             // Add one so that each place corresponds to the value of its place.
             // Then use place 0 as wright protection.
             //TODO setup wright protection
-            p[column][row] = xmalloc((options + 1) * sizeof(*p[column][row]));
+            sudoku[column][row] = xmalloc((options + 1) * sizeof(*sudoku[column][row]));
+            sudokuTemp[column][row] = xmalloc((options + 1) * sizeof(*sudokuTemp[column][row]));
         }
     }
 
@@ -62,9 +103,11 @@ int main() {
 
         for (int column = 0; column < size; column++) {
             if (input[column] == 0) {
-                fillPossible(p, column, row);
+                fillPossible(sudoku, column, row);
+                fillPossible(sudokuTemp, column, row);
             } else if (input[column] > 0 && input[column] <= options) {
-                setOnlyPossible(p, column, row, input[column]);
+                setOnlyPossible(sudoku, column, row, input[column]);
+                setOnlyPossible(sudokuTemp, column, row, input[column]);
             } else {
                 printf("A input error has occurred!");
                 exit;
@@ -73,13 +116,12 @@ int main() {
     }
 
     printf("Input suduku: \n");
-    printSudoku(p);
-    printSudokuBig(p);
+    printSudoku(sudoku);
 
     int count = 1;
-    while (!isComplete(p)) {
+    while (!isComplete(sudoku)) {
 
-        if (invalid(p)) {
+        if (invalid(sudoku)) {
             printf("The sudoku you entered is invalid. Program will end.");    diff = clock() - start;
 
             diff = clock() - start;
@@ -89,10 +131,37 @@ int main() {
             return 1;
         }
 
-        if (count > 20) {
-            printf("Unable to solve the sudoku entered, will print current progress. Program will end. \n");
-            printSudokuWithSuggestions(p);
-            printSudokuBig(p);
+        //Duplicate lines so each action happens both before and after all other actions so if one action is
+        // dependant on another they are all completed until no more can be done using the simple solve systems.
+        solveRows(sudoku);
+        solveColumns(sudoku);
+        solveBlocks(sudoku);
+        solveColumns(sudoku);
+        solveRows(sudoku);
+
+        solveSuggestionBlockLines(sudoku);
+
+        solvePairs(sudoku);
+
+        solveXWing(sudoku);
+
+        int change = 0;
+        for (int column = 0; column < size; column++) {
+            for (int row = 0; row < size; row++) {
+                for (int option = 1; option <= size; option++) {
+                    if (sudokuTemp[column][row][option] != sudoku[column][row][option]) {
+                        change = 1;
+                    }
+
+                    sudokuTemp[column][row][option] = sudoku[column][row][option];
+                }
+            }
+        }
+
+        if (!change) {
+            printf("Unable to solve the sudoku entered, will print current progress. Stages complete = %i. Program will end. \n", count);
+            printSudokuWithSuggestions(sudoku);
+            printSudoku(sudoku);
             diff = clock() - start;
 
             int microsec = diff/ CLOCKS_PER_SEC;
@@ -100,25 +169,11 @@ int main() {
             return 1;
         }
 
-        //Duplicate lines so each action happens both before and after all other actions so if one action is
-        // dependant on another they are all completed until no more can be done using the simple solve systems.
-        solveRows(p);
-        solveColumns(p);
-        solveBlocks(p);
-        solveColumns(p);
-        solveRows(p);
-
-        solveSuggestionBlockLines(p);
-
-        solvePairs(p);
-
-        solveXWing(p);
-
         count++;
     }
 
     printf("Stage %i:\n\n", count);
-    printSudoku(p);
+    printSudoku(sudoku);
 
 
     diff = clock() - start;
@@ -139,15 +194,13 @@ void fillPossible(int ***p, int column, int row) {
 // Sets cell to be only one possible
 void setOnlyPossible(int ***p, int column, int row, int number) {
 
-    eliminatePossibleFromRow(p, column, row, number);
-    eliminatePossibleFromColumn(p, column, row, number);
+    eliminatePossibleFromRow(p, row, number);
+    eliminatePossibleFromColumn(p, column, number);
     eliminatePossibleFromBlock(p, column, row, number);
 
     for (int i = 1; i <= size; i++) {
         p[column][row][i] = (i == number);
     }
-
-    p[column][row][0] = 1;
 }
 
 // Sets a value of the given cell to possible or imposable
@@ -156,22 +209,34 @@ void setIfPossible(int ***p, int column, int row, int number, int possible) {
 }
 
 // Eliminates a number from the column
-void eliminatePossibleFromColumn(int ***p, int column, int row, int number) {
-    for (int r = 0; r < size; r++) {
-        // 0 represents impossible
-        setIfPossible(p, column, r, number, 0);
-    }
-
+void eliminatePossibleFromColumnExcept(int ***p, int column, int row, int number) {
+    eliminatePossibleFromColumn(p, column, number);
     setIfPossible(p, column, row, number, 1);
 }
 
+// Eliminates a number from the row except at the given point
+void eliminatePossibleFromRowExcept(int ***p, int column, int row, int number) {
+    eliminatePossibleFromRow(p, row, number);
+    setIfPossible(p, column, row, number, 1);
+}
+
+// Eliminates a number from the column
+void eliminatePossibleFromColumn(int ***p, int column, int number) {
+    for (int r = 0; r < size; r++) {
+        setIfPossible(p, column, r, number, 0);
+    }
+}
+
 // Eliminates a number from the row
-void eliminatePossibleFromRow(int ***p, int column, int row, int number) {
+void eliminatePossibleFromRow(int ***p, int row, int number) {
     for (int c = 0; c < size; c++) {
-        // 0 represents impossible
         setIfPossible(p, c, row, number, 0);
     }
+}
 
+// Eliminates a number from the block
+void eliminatePossibleFromBlockExcept(int ***p, int column, int row, int number) {
+    eliminatePossibleFromBlock(p, column, row, number);
     setIfPossible(p, column, row, number, 1);
 }
 
@@ -187,8 +252,6 @@ void eliminatePossibleFromBlock(int ***p, int column, int row, int number) {
             setIfPossible(p, c + columnOffset, r + rowOffset, number, 0);
         }
     }
-
-    setIfPossible(p, column, row, number, 1);
 }
 
 // Returns amount of cells in the column with the suggestion.
@@ -251,10 +314,8 @@ int findFinalCellValue(int ***p, int column, int row) {
     int value = 0;
 
     for (int option = 1; option <= size; option++) {
-        int temp = p[column][row][option];
-
         // Option is a possible value of this cell.
-        if (temp == 1) {
+        if (p[column][row][option] == 1) {
             possibilities++;
             value = option;
         }

@@ -75,18 +75,11 @@ void printSudokuBig(int ***p) {
         }
     }
 
-
     printf("===============================================================================================\n\n\n");
 }
 
 
 void printSudokuWithSuggestions(int ***p) {
-
-    //return;
-
-    printf("Start of sudoku with hits \n");
-
-
     for (int row = 0; row < size; row ++) {
 
         if (row % 3 == 0) {
@@ -131,8 +124,5 @@ void printSudokuWithSuggestions(int ***p) {
         }
     }
 
-
     printf("===============================================================================================\n\n\n");
-
-    printf("\n end of sudoku with hits \n");
 }
