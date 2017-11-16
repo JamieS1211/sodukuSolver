@@ -141,7 +141,7 @@ int main() {
 
         solveSuggestionBlockLines(sudoku);
 
-        solvePairs(sudoku);
+        solveHighOrderLinkedCells(sudoku);
 
         solveXWing(sudoku);
 
