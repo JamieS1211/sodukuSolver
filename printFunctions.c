@@ -2,16 +2,20 @@
 // Created by Jamie on 09/11/2017.
 //
 #include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 #include "config.h"
 #include "main.h"
 
 void printSudoku(int ***p) {
+    int maxDigitLength = floor(log10(abs(size))) + 1;
+
     int value;
     for (int row = 0; row < size; row ++){
-        if (row % 3 == 0) {
-            printSolidLine();
+        if (row % sizeRoot == 0) {
+            printSolidLine(maxDigitLength);
         } else {
-            printBrokenLine();
+            printBrokenLine(maxDigitLength);
         }
         for (int column = 0; column < size; column++) {
             if (column % sizeRoot == 0) {
@@ -23,26 +27,35 @@ void printSudoku(int ***p) {
             value = findFinalCellValue(p, column, row);
 
             if (value == 0) {
-                printf("   ");
+                printf("  ");
+                for (int i = 0; i < maxDigitLength; i ++) {
+                    printf(" ");
+                }
             } else {
                 printf(" %i ", value);
+                int extraDigitSpace = maxDigitLength - (floor(log10(abs(value))) + 1);
+                for (int i = 0; i < extraDigitSpace; i++) {
+                    printf(" ");
+                }
             }
         }
         printf("¦¦ \n");
     }
 
-    printSolidLine();
+    printSolidLine(maxDigitLength);
     printf("\n\n");
 }
 
 
 void printSudokuBig(int ***p) {
+    int maxDigitLength = floor(log10(abs(size))) + 1;
+
     for (int row = 0; row < size; row ++) {
 
         if (row % 3 == 0) {
-            printFullSolidLine();
+            printFullSolidLine(maxDigitLength);
         } else {
-            printFullBrokenLine();
+            printFullBrokenLine(maxDigitLength);
         }
 
         for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
@@ -65,9 +78,20 @@ void printSudokuBig(int ***p) {
                         printf("   ");
                     } else {
                         if (((1 + size) / 2) == valueToCheck) {
+
+
                             printf(" %i ", cellValue);
+
+                            int extraDigitSpace = maxDigitLength - (floor(log10(abs(cellValue))) + 1);
+                            for (int i = 0; i < extraDigitSpace; i++) {
+                                printf(" ");
+                            }
+
                         } else {
-                            printf("   ");
+                            printf("  ");
+                            for (int i = 0; i < maxDigitLength; i ++) {
+                                printf(" ");
+                            }
                         }
                     }
                 }
@@ -77,18 +101,20 @@ void printSudokuBig(int ***p) {
         }
     }
 
-    printFullSolidLine();
+    printFullSolidLine(maxDigitLength);
     printf("\n\n");
 }
 
 
 void printSudokuWithSuggestions(int ***p) {
+    int maxDigitLength = floor(log10(abs(size))) + 1;
+
     for (int row = 0; row < size; row ++) {
 
         if (row % 3 == 0) {
-            printFullSolidLine();
+            printFullSolidLine(maxDigitLength);
         } else {
-            printFullBrokenLine();
+            printFullBrokenLine(maxDigitLength);
         }
 
         for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
@@ -110,14 +136,28 @@ void printSudokuWithSuggestions(int ***p) {
                     if (cellValue == 0) {
                         if (p[column][row][valueToCheck] == 1) {
                             printf(" %i ", valueToCheck);
+                            int extraDigitSpace = maxDigitLength - (floor(log10(abs(valueToCheck))) + 1);
+                            for (int i = 0; i < extraDigitSpace; i++) {
+                                printf(" ");
+                            }
                         } else {
-                            printf("   ");
+                            printf("  ");
+                            for (int i = 0; i < maxDigitLength; i ++) {
+                                printf(" ");
+                            }
                         }
                     } else {
                         if (((1 + size) / 2) == valueToCheck) {
                             printf(" %i ", cellValue);
+                            int extraDigitSpace = maxDigitLength - (floor(log10(abs(cellValue))) + 1);
+                            for (int i = 0; i < extraDigitSpace; i++) {
+                                printf(" ");
+                            }
                         } else {
-                            printf("   ");
+                            printf("  ");
+                            for (int i = 0; i < maxDigitLength; i ++) {
+                                printf(" ");
+                            }
                         }
                     }
                 }
@@ -127,11 +167,11 @@ void printSudokuWithSuggestions(int ***p) {
         }
     }
 
-    printFullSolidLine();
+    printFullSolidLine(maxDigitLength);
     printf("\n\n");
 }
 
-void printFullSolidLine() {
+void printFullSolidLine(int maxDigitLength) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -141,14 +181,16 @@ void printFullSolidLine() {
             }
 
             for (int k = 0; k < size; k++) {
-                printf("=");
+                for (int k = 0; k < maxDigitLength; k++) {
+                    printf("=");
+                }
             }
         }
     }
     printf("==\n");
 }
 
-void printFullBrokenLine() {
+void printFullBrokenLine(int maxDigitLength) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -158,7 +200,9 @@ void printFullBrokenLine() {
             }
 
             for (int k = 0; k < size; k++) {
-                printf("-");
+                for (int k = 0; k < maxDigitLength; k++) {
+                    printf("-");
+                }
             }
         }
     }
@@ -167,20 +211,26 @@ void printFullBrokenLine() {
 
 
 
-void printSolidLine() {
+void printSolidLine(int maxDigitLength) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
-                printf("=====");
+                printf("==");
             } else {
-                printf("====");
+                printf("=");
+            }
+
+            printf("==");
+            // For every digit make a space
+            for (int k = 0; k < maxDigitLength; k++) {
+                printf("=");
             }
         }
     }
     printf("==\n");
 }
 
-void printBrokenLine() {
+void printBrokenLine(int maxDigitLength) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -189,7 +239,11 @@ void printBrokenLine() {
                 printf("+");
             }
 
-            printf("---");
+            printf("--");
+            // For every digit make a space
+            for (int k = 0; k < maxDigitLength; k++) {
+                printf("-");
+            }
         }
     }
     printf("¦¦\n");

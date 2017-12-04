@@ -1,2 +1,2 @@
-#define size 9
-#define sizeRoot 3
+#define size 16
+#define sizeRoot 4

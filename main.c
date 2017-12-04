@@ -67,7 +67,7 @@ int main() {
 
 
 
-    fp = fopen("realSudoku7.txt", "r");
+    fp = fopen("realSudoku16.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
@@ -93,13 +93,11 @@ int main() {
     }
 
     for (int row = 0; row < size; row++) {
-        int input[9];
+        int input[size];
 
-        //TODO make this size variable
-        fscanf(fp, "%i %i %i %i %i %i %i %i %i",
-               &input[0], &input[1], &input[2],
-               &input[3], &input[4], &input[5],
-               &input[6], &input[7], &input[8]);
+        for (int i = 0; i < size; i++) {
+            fscanf(fp, "%i", &input[i]);
+        }
 
         for (int column = 0; column < size; column++) {
             if (input[column] == 0) {
