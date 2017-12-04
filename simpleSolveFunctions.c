@@ -5,6 +5,7 @@
 #include <math.h>
 #include "config.h"
 #include "main.h"
+#include "printFunctions.h"
 
 void solveRows(int ***p) {
     int options = size;
@@ -112,68 +113,117 @@ void solveBlocks(int ***p) {
     return;
 }
 
-// Removes possibilities when all suggestions for a number in a block are in same row or column
 void solveSuggestionBlockLines(int ***p) {
 
-    for (int leftColumn = 0; leftColumn < size; leftColumn = leftColumn + sizeRoot) {
-        for (int topRow = 0; topRow < size; topRow = topRow + sizeRoot) {
 
-            for (int option = 1; option <= size; option++) {
+    Block blocks[sizeRoot];
+    int blocksSelected = 1;
 
-                if (cellsWithSuggestionInBlock(p, leftColumn, topRow, option) >= 2) {
+    for (int i = 0; i < pow(size, sizeRoot); i++) {
 
-                    int cValuesUsed[sizeRoot];
-                    int rValuesUsed[sizeRoot];
+        int count = i;
+        int correctOrder = 1;
 
-                    for (int i = 0; i < sizeRoot; i++) {
-                        cValuesUsed[i] = 0;
-                        rValuesUsed[i] = 0;
+        for (int j = size - 1; j >= 0; j--) {
+            int positionWorth = pow(size, j);
+            int positionValue = 0;
+
+            while (count >= positionWorth) {
+                count = count - positionWorth;
+                positionValue++;
+            }
+
+            blocks[j].blockColumn = positionValue % sizeRoot;
+            blocks[j].blockRow = (positionValue - blocks[j].blockColumn) / sizeRoot;
+        }
+
+        for (int j = sizeRoot - 1; j >= 0; j--) {
+            if (blocks[j].blockColumn > 0 || blocks[j].blockRow > 0) {
+                blocksSelected = j + 1;
+                break;
+            }
+        }
+
+
+        int columnSelection = 1;
+        int rowSelection = 1;
+
+
+        if (blocksSelected > 1) {
+            for (int j = 0; j < blocksSelected - 1; j++) {
+
+                if (blocks[j].blockRow * sizeRoot + blocks[j].blockColumn >=
+                    blocks[j + 1].blockRow * sizeRoot + blocks[j + 1].blockColumn) {
+                    correctOrder = 0;
+                }
+
+                if (blocks[j].blockColumn != blocks[j + 1].blockColumn) {
+                    columnSelection = 0;
+                }
+
+                if (blocks[j].blockRow != blocks[j + 1].blockRow) {
+                    rowSelection = 0;
+                }
+            }
+        }
+
+        // If block combination has not been used before and is valid.
+        if (correctOrder && (columnSelection || rowSelection)) {
+
+            if (columnSelection) {
+
+                int leftColumn = blocks[0].blockColumn;
+
+                for (int option = 1; option <= size; option++) {
+
+                    int columnsUsed[sizeRoot];
+                    for (int j = 0; j < sizeRoot; j++) {
+                        columnsUsed[j] = 0;
                     }
 
-                    for (int c = 0; c < sizeRoot; c++) {
-                        int column = leftColumn + c;
 
-                        for (int r = 0; r < sizeRoot; r++) {
-                            int row = topRow + r;
+                    for (int j = 0; j < blocksSelected; j++) {
 
-                            // If that value is at this position mark this row and column as used
-                            if (p[column][row][option] == 1) {
-                                cValuesUsed[c] = 1;
-                                rValuesUsed[r] = 1;
+                        for (int columnOffset = 0; columnOffset < sizeRoot; columnOffset++) {
+                            int column = columnOffset + (blocks[j].blockColumn * sizeRoot);
+
+                            for (int rowOffset = 0; rowOffset < sizeRoot; rowOffset++) {
+                                int row = rowOffset + (blocks[j].blockRow * sizeRoot);
+
+                                if (p[column][row][option] == 1) {
+                                    columnsUsed[columnOffset] = 1;
+                                    break;
+                                }
                             }
+
                         }
                     }
 
                     int usedColumnCount = 0;
-                    int lastColumnUsed = 0;
                     for (int c = 0; c < sizeRoot; c++) {
-                        if (cValuesUsed[c] == 1) {
+                        if (columnsUsed[c] == 1) {
                             usedColumnCount++;
-                            lastColumnUsed = leftColumn + c;
                         }
                     }
 
-                    int usedRowCount = 0;
-                    int lastRowUsed = 0;
-                    for (int r = 0; r < sizeRoot; r++) {
-                        if (rValuesUsed[r] == 1) {
-                            usedRowCount++;
-                            lastRowUsed = topRow + r;
-                        }
-                    }
+                    if (usedColumnCount == blocksSelected) {
+                        for (int c = 0; c < sizeRoot; c++) {
+                            if (columnsUsed[c] == 1) {
 
-                    if (usedColumnCount == 1) {
-                        for (int row = 0; row < size; row++) {
-                            if ((row < topRow || row >= topRow + sizeRoot) && p[lastColumnUsed][row][option] == 1) {
-                                setIfPossible(p, lastColumnUsed, row, option, 0);
-                            }
-                        }
-                    }
+                                // If this column was used we must eliminate this option from rows of the column that are not in the selected blocks
+                                for (int row = 0; row < size; row++) {
+                                    int rowInSelection = 0;
+                                    for (int j = 0; j < sizeRoot; j++) {
+                                        if (row >= (blocks[j].blockRow * sizeRoot) && row < (blocks[j].blockRow + 1) * sizeRoot) {
+                                            rowInSelection = 1;
+                                            break;
+                                        }
+                                    }
 
-                    if (usedRowCount == 1) {
-                        for (int column = 0; column < size; column++) {
-                            if ((column < leftColumn || column >= leftColumn + sizeRoot) && p[column][lastRowUsed][option] == 1) {
-                                setIfPossible(p, column, lastRowUsed, option, 0);
+                                    if (!rowInSelection && (p[(leftColumn * sizeRoot) + c][row][option] == 1)) {
+                                        setIfPossible(p, (leftColumn * sizeRoot) + c, row, option, 0);
+                                    }
+                                }
                             }
                         }
                     }

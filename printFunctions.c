@@ -14,7 +14,7 @@ void printSudoku(int ***p) {
             printf("¦¦----+----+----¦¦----+----+----¦¦----+----+----¦¦\n");
         }
         for (int column = 0; column < size; column++) {
-            if (column % 3 == 0) {
+            if (column % sizeRoot == 0) {
                 printf("¦¦");
             } else {
                 printf("¦");
@@ -49,7 +49,7 @@ void printSudokuBig(int ***p) {
 
                 int cellValue = findFinalCellValue(p, column, row);
 
-                if (column % 3 == 0) {
+                if (column % sizeRoot == 0) {
                     printf("¦¦");
                 } else {
                     printf("¦");
@@ -94,7 +94,7 @@ void printSudokuWithSuggestions(int ***p) {
 
                 int cellValue = findFinalCellValue(p, column, row);
 
-                if (column % 3 == 0) {
+                if (column % sizeRoot == 0) {
                     printf("¦¦");
                 } else {
                     printf("¦");

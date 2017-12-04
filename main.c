@@ -67,7 +67,7 @@ int main() {
 
 
 
-    fp = fopen("realSudoku5.txt", "r");
+    fp = fopen("realSudoku7.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
@@ -298,7 +298,7 @@ int cellsWithSuggestionInBlock(int ***p, int column, int row, int number) {
         for (int rowOffset = 0; rowOffset < sizeRoot; rowOffset++) {
             // Option is a possible value of this cell.
             if (findFinalCellValue(p, c + columnOffset, r + rowOffset) == number) {
-                return 0;
+                return -1;
             } else if (p[c + columnOffset][r + rowOffset][number] == 1) {
                 possiblePlaces++;
             }

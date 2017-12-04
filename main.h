@@ -26,3 +26,13 @@ int invalid(int ***p);
 int isComplete(int ***p);
 
 void * xmalloc(size_t n);
+
+typedef struct block {
+    int blockRow;
+    int blockColumn;
+} Block;
+
+typedef struct cell {
+    int row;
+    int column;
+} Cell;

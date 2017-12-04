@@ -6,11 +6,6 @@
 #include "config.h"
 #include "main.h"
 
-typedef struct cell {
-    int row;
-    int column;
-} Cell;
-
 void solveHighOrderLinkedCells(int ***p) {
     int maxOrder = size / 2;
 
@@ -431,7 +426,7 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
     }
 
     Cell cells[size];
-    int cellsRequired;
+    int cellsRequired = 1;
 
     for (int i = 0; i < pow(size, maximumToCheck); i++) {
 
@@ -461,25 +456,20 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
         if (cellsRequired > 1) {
             for (int j = 0; j < cellsRequired - 1; j++) {
 
-                if (cells[j].column >= cells[j + 1].column || cells[j].row >= cells[j + 1].row) {
-                    correctOrder = 0;
-                }
-
-                if (cells[j].column == cells[j + 1].column && cells[j].row == cells[j].row) {
+                if (cells[j].row * sizeRoot + cells[j].column >= cells[j + 1].row * sizeRoot + cells[j + 1].column) {
                     correctOrder = 0;
                 }
             }
 
-            // If row combination has not been used before and is valid.
             if (correctOrder) {
                 int solvedCell = 0;
                 for (int l = 0; l < cellsRequired; l++) {
-                    int value = findFinalCellValue(p, cells[l].column, cells[l].row);
+                    int value = findFinalCellValue(p, columnStart + cells[l].column, rowStart + cells[l].row);
                     if (value != 0) {
                         solvedCell = 1;
-                        eliminatePossibleFromBlockExcept(p, cells[l].column, cells[l].row, value);
-                        eliminatePossibleFromBlockExcept(p, cells[l].column, cells[l].row, value);
-                        eliminatePossibleFromBlockExcept(p, cells[l].column, cells[l].row, value);
+                        eliminatePossibleFromBlockExcept(p, columnStart + cells[l].column, rowStart + cells[l].row, value);
+                        eliminatePossibleFromBlockExcept(p, columnStart + cells[l].column, rowStart + cells[l].row, value);
+                        eliminatePossibleFromBlockExcept(p, columnStart + cells[l].column, rowStart + cells[l].row, value);
                     }
                 }
 
@@ -503,14 +493,14 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
                         int valueAbsentInAllCells = 1;
 
                         for (int m = 0; m < cellsRequired; m++) {
-                            if (p[cells[m].column][cells[m].row][option] == 0) {
+                            if (p[columnStart + cells[m].column][rowStart + cells[m].row][option] == 0) {
                                 valuePresentInAllCells = 0;
                                 break;
                             }
                         }
 
                         for (int m = 0; m < cellsRequired; m++) {
-                            if (p[cells[m].column][cells[m].row][option] == 1) {
+                            if (p[columnStart + cells[m].column][rowStart + cells[m].row][option] == 1) {
                                 valueAbsentInAllCells = 0;
                                 break;
                             }
@@ -539,7 +529,7 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
                             int valuePresentInAllCells = 1;
 
                             for (int m = 0; m < cellsRequired; m++) {
-                                if (p[cells[m].column][cells[m].row][option] == 0) {
+                                if (p[columnStart + cells[m].column][rowStart + cells[m].row][option] == 0) {
                                     valuePresentInAllCells = 0;
                                     break;
                                 }
@@ -549,7 +539,7 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
                                 eliminatePossibleFromBlock(p, columnStart, rowStart, option);
 
                                 for (int m = 0; m < cellsRequired; m++) {
-                                    setIfPossible(p, cells[m].column, cells[m].row, option, 1);
+                                    setIfPossible(p, columnStart + cells[m].column, rowStart + cells[m].row, option, 1);
                                 }
                             }
                         }
@@ -565,9 +555,13 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
                         if (count == cellsRequired) {
                             for (int option = 1; option <= size; option++) {
                                 // Exist somewhere else or not in all cells
+
+
                                 if (valuesElsewhere[option] > 0 || valuesElsewhereCalculated[option] == 0) {
                                     for (int m = 0; m < cellsRequired; m++) {
-                                        setIfPossible(p, cells[m].column, cells[m].row, option, 0);
+                                        if (p[columnStart + cells[m].column][rowStart + cells[m].row][option] == 1) {
+                                            setIfPossible(p, columnStart + cells[m].column, rowStart + cells[m].row, option, 0);
+                                        }
                                     }
                                 }
                             }
@@ -578,7 +572,7 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
 
                         for (int option = 1; option <= size; option++) {
                             for (int m = 0; m < cellsRequired; m++) {
-                                if (p[cells[m].column][cells[m].row][option] == 1) {
+                                if (p[columnStart + cells[m].column][rowStart + cells[m].row][option] == 1) {
                                     valuesUsedInCells[option] = 1;
                                     totalValuesBetweenCells++;
                                     break;
@@ -602,7 +596,7 @@ void solveHighOrderCellsInBlock(int ***p, int columnStart, int rowStart, int max
                             for (int position = 0; position < size; position++) {
                                 for (int option = 0; option < size; option++) {
                                     if (valuesUsedInCells[option] == 1 && cellsToEliminate[position] == 1) {
-                                        setIfPossible(p, (position - (position % 3)) / 3, position % 3, option, 0);
+                                        setIfPossible(p, columnStart + ((position - (position % 3)) / 3), rowStart + (position % 3), option, 0);
                                     }
                                 }
                             }

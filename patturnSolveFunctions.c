@@ -6,6 +6,7 @@
 #include "config.h"
 #include "main.h"
 
+//TODO generalise for higher order
 void solveXWing(int ***p) {
     for (int columnA = 0; columnA < size; columnA++) {
         for (int columnB = 0; columnB < size; columnB++) {
