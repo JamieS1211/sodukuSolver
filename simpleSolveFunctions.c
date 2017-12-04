@@ -5,7 +5,6 @@
 #include <math.h>
 #include "config.h"
 #include "main.h"
-#include "printFunctions.h"
 
 void solveRows(int ***p) {
     int options = size;
@@ -114,8 +113,6 @@ void solveBlocks(int ***p) {
 }
 
 void solveSuggestionBlockLines(int ***p) {
-
-
     Block blocks[sizeRoot];
     int blocksSelected = 1;
 

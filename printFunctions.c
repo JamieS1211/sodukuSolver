@@ -9,9 +9,9 @@ void printSudoku(int ***p) {
     int value;
     for (int row = 0; row < size; row ++){
         if (row % 3 == 0) {
-            printf("==================================================\n");
+            printSolidLine();
         } else {
-            printf("¦¦----+----+----¦¦----+----+----¦¦----+----+----¦¦\n");
+            printBrokenLine();
         }
         for (int column = 0; column < size; column++) {
             if (column % sizeRoot == 0) {
@@ -23,14 +23,16 @@ void printSudoku(int ***p) {
             value = findFinalCellValue(p, column, row);
 
             if (value == 0) {
-                printf("    ");
+                printf("   ");
             } else {
-                printf(" %i  ", value);
+                printf(" %i ", value);
             }
         }
         printf("¦¦ \n");
     }
-    printf("==================================================\n\n\n");
+
+    printSolidLine();
+    printf("\n\n");
 }
 
 
@@ -38,9 +40,9 @@ void printSudokuBig(int ***p) {
     for (int row = 0; row < size; row ++) {
 
         if (row % 3 == 0) {
-            printf("===============================================================================================\n");
+            printFullSolidLine();
         } else {
-            printf("¦¦---------+---------+---------¦¦---------+---------+---------¦¦---------+---------+---------¦¦\n");
+            printFullBrokenLine();
         }
 
         for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
@@ -75,7 +77,8 @@ void printSudokuBig(int ***p) {
         }
     }
 
-    printf("===============================================================================================\n\n\n");
+    printFullSolidLine();
+    printf("\n\n");
 }
 
 
@@ -83,9 +86,9 @@ void printSudokuWithSuggestions(int ***p) {
     for (int row = 0; row < size; row ++) {
 
         if (row % 3 == 0) {
-            printf("===============================================================================================\n");
+            printFullSolidLine();
         } else {
-            printf("¦¦---------+---------+---------¦¦---------+---------+---------¦¦---------+---------+---------¦¦\n");
+            printFullBrokenLine();
         }
 
         for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
@@ -124,5 +127,70 @@ void printSudokuWithSuggestions(int ***p) {
         }
     }
 
-    printf("===============================================================================================\n\n\n");
+    printFullSolidLine();
+    printf("\n\n");
+}
+
+void printFullSolidLine() {
+    for (int i = 0; i < sizeRoot; i++) {
+        for (int j = 0; j < sizeRoot; j++) {
+            if (j == 0) {
+                printf("==");
+            } else {
+                printf("=");
+            }
+
+            for (int k = 0; k < size; k++) {
+                printf("=");
+            }
+        }
+    }
+    printf("==\n");
+}
+
+void printFullBrokenLine() {
+    for (int i = 0; i < sizeRoot; i++) {
+        for (int j = 0; j < sizeRoot; j++) {
+            if (j == 0) {
+                printf("¦¦");
+            } else {
+                printf("+");
+            }
+
+            for (int k = 0; k < size; k++) {
+                printf("-");
+            }
+        }
+    }
+    printf("¦¦\n");
+}
+
+
+
+void printSolidLine() {
+    for (int i = 0; i < sizeRoot; i++) {
+        for (int j = 0; j < sizeRoot; j++) {
+            if (j == 0) {
+                printf("=====");
+            } else {
+                printf("====");
+            }
+        }
+    }
+    printf("==\n");
+}
+
+void printBrokenLine() {
+    for (int i = 0; i < sizeRoot; i++) {
+        for (int j = 0; j < sizeRoot; j++) {
+            if (j == 0) {
+                printf("¦¦");
+            } else {
+                printf("+");
+            }
+
+            printf("---");
+        }
+    }
+    printf("¦¦\n");
 }

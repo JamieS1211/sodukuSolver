@@ -139,6 +139,8 @@ int main() {
         solveColumns(sudoku);
         solveRows(sudoku);
 
+        printSudokuWithSuggestions(sudoku);
+
         solveSuggestionBlockLines(sudoku);
 
         solveHighOrderLinkedCells(sudoku);
