@@ -5,6 +5,7 @@
 #include <math.h>
 #include "global.h"
 #include "cellFunctions.h"
+#include "utilityFunctions.h"
 
 extern int steps;
 
@@ -64,33 +65,14 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
     cell.row = row;
 
     int columns[order];
+    for (int i = 0; i < order; i++) {
+        columns[i] = 0;
+    }
+
     int columnsRequired = 1;
 
-    for (int i = 0; i < pow(size, order); i++) {
-
-        int previousColumnValue = size;
-        int count = i;
-
+    do {
         int correctOrder = 1;
-
-        for (int j = order - 1; j >= 0; j--) {
-            int positionWorth = pow(size, j);
-            int positionValue = 0;
-
-            while (count >= positionWorth) {
-                count = count - positionWorth;
-                positionValue++;
-            }
-
-            if (positionValue > 0) {
-                if (positionValue >= previousColumnValue) {
-                    correctOrder = 0;
-                }
-                previousColumnValue = positionValue;
-            }
-
-            columns[j] = positionValue;
-        }
 
         for (int j = order - 1; j >= 0; j--) {
             if (columns[j] > 0) {
@@ -324,7 +306,7 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
                 }
             }
         }
-    }
+    } while (!nBitCounterAddOne(order, columns, size));
 
     return steps - startSteps;
 }
@@ -345,24 +327,14 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
     cell.column = column;
 
     int rows[order];
+    for (int i = 0; i < order; i++) {
+        rows[i] = 0;
+    }
+
     int rowsRequired = 1;
 
-    for (int i = 0; i < pow(size, order); i++) {
-
-        int count = i;
+    do {
         int correctOrder = 1;
-
-        for (int j = order - 1; j >= 0; j--) {
-            int positionWorth = pow(size, j);
-            int positionValue = 0;
-
-            while (count >= positionWorth) {
-                count = count - positionWorth;
-                positionValue++;
-            }
-
-            rows[j] = positionValue;
-        }
 
         for (int j = order - 1; j >= 0; j--) {
             if (rows[j] > 0) {
@@ -596,7 +568,7 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
                 }
             }
         }
-    }
+    } while (!nBitCounterAddOne(order, rows, size));
 
     return steps - startSteps;
 }
@@ -614,25 +586,20 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
 
     Cell cell;
 
+    int counter[order];
+    for (int i = 0; i < order; i++) {
+        counter[i] = 0;
+    }
+
     Cell cellsOffsets[order];
     int cellsRequired = 1;
 
-    for (int i = 0; i < pow(size, order); i++) {
-
-        int count = i;
+    do {
         int correctOrder = 1;
 
-        for (int j = order - 1; j >= 0; j--) {
-            int positionWorth = pow(size, j);
-            int positionValue = 0;
-
-            while (count >= positionWorth) {
-                count = count - positionWorth;
-                positionValue++;
-            }
-
-            cellsOffsets[j].column = positionValue % sizeRoot;
-            cellsOffsets[j].row = (positionValue - cellsOffsets[j].column) / sizeRoot;
+        for (int j = 0; j < order; j++) {
+            cellsOffsets[j].column = counter[j] % sizeRoot;
+            cellsOffsets[j].row = (counter[j] - cellsOffsets[j].column) / sizeRoot;
         }
 
         for (int j = order - 1; j >= 0; j--) {
@@ -868,7 +835,7 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
                 }
             }
         }
-    }
+    } while (!nBitCounterAddOne(order, counter, size));
 
     return steps - startSteps;
 }

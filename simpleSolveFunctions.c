@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "global.h"
 #include "cellFunctions.h"
+#include "utilityFunctions.h"
 
 extern int steps;
 
@@ -158,27 +159,22 @@ int solveBlocks(int ***p) {
  * @return              Number of changes made
  */
 int solveSuggestionBlockLines(int ***p, int order) {
+    int counter[order];
+    for (int i = 0; i < order; i++) {
+        counter[i] = 0;
+    }
+
     Block blocks[order];
     int blocksSelected = 1;
 
     int startSteps = steps;
 
-    for (int i = 0; i < pow(size, order); i++) {
-
-        int count = i;
+    do {
         int correctOrder = 1;
 
-        for (int j = size - 1; j >= 0; j--) {
-            int positionWorth = pow(size, j);
-            int positionValue = 0;
-
-            while (count >= positionWorth) {
-                count = count - positionWorth;
-                positionValue++;
-            }
-
-            blocks[j].blockColumn = positionValue % sizeRoot;
-            blocks[j].blockRow = (positionValue - blocks[j].blockColumn) / sizeRoot;
+        for (int j = 0; j < order; j++) {
+            blocks[j].blockColumn = counter[j] % sizeRoot;
+            blocks[j].blockRow = (counter[j] - blocks[j].blockColumn) / sizeRoot;
         }
 
         for (int j = sizeRoot - 1; j >= 0; j--) {
@@ -374,7 +370,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
                 }
             }
         }
-    }
+    } while (!nBitCounterAddOne(order, counter, size));
 
     return steps - startSteps;
 }

@@ -119,6 +119,12 @@
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/simpleSolveFunctions.h">
 			<Option target="sudokuSolver"/>
 		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/utilityFunctions.c">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/utilityFunctions.h">
+			<Option target="sudokuSolver"/>
+		</Unit>
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

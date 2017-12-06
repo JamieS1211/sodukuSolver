@@ -312,6 +312,33 @@ simpleSolveFunctions.c.s:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/simpleSolveFunctions.c.s
 .PHONY : simpleSolveFunctions.c.s
 
+utilityFunctions.o: utilityFunctions.c.o
+
+.PHONY : utilityFunctions.o
+
+# target to build an object file
+utilityFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/utilityFunctions.c.o
+.PHONY : utilityFunctions.c.o
+
+utilityFunctions.i: utilityFunctions.c.i
+
+.PHONY : utilityFunctions.i
+
+# target to preprocess a source file
+utilityFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/utilityFunctions.c.i
+.PHONY : utilityFunctions.c.i
+
+utilityFunctions.s: utilityFunctions.c.s
+
+.PHONY : utilityFunctions.s
+
+# target to generate assembly for a file
+utilityFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/utilityFunctions.c.s
+.PHONY : utilityFunctions.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -342,6 +369,9 @@ help:
 	@echo "... simpleSolveFunctions.o"
 	@echo "... simpleSolveFunctions.i"
 	@echo "... simpleSolveFunctions.s"
+	@echo "... utilityFunctions.o"
+	@echo "... utilityFunctions.i"
+	@echo "... utilityFunctions.s"
 .PHONY : help
 
 

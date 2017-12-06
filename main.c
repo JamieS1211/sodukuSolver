@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #include "global.h"
 #include "global.c"
@@ -40,7 +41,7 @@ int main() {
 
 
 
-    fp = fopen("realSudoku16.txt", "r");
+    fp = fopen("realSudoku5.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
@@ -109,15 +110,13 @@ int main() {
             changes += solveBlocks(sudoku);
         }
 
-        for (int n = 1; n <= sizeRoot; n++) {
-            if (changes == 0) {
-                changes += solveSuggestionBlockLines(sudoku, n);
-            }
-        }
-
-        for (int n = 2; n <= size / 2; n++) {
-            if (changes == 0) {
+        for (int n = 1; n <= size; n++) {
+            if (changes == 0 && n > 1) {
                 changes += solveHighOrderLinkedCells(sudoku, n);
+            }
+
+            if (changes == 0 && n <= sizeRoot) {
+                changes += solveSuggestionBlockLines(sudoku, n);
             }
         }
 
@@ -125,7 +124,7 @@ int main() {
             //change += solveXWing(sudoku);
         }
 
-        if (changes == 0 && !isComplete(sudoku)) {
+        if (changes == 0) {
             printf("Unable to solve the sudoku entered, will print current progress. Steps complete = %i. Program will end. \n", steps);
             printSudokuWithSuggestions(sudoku);
             printSudoku(sudoku);

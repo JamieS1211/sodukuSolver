@@ -1,7 +1,7 @@
-#define size 16
-#define sizeRoot 4
+#define size 9
+#define sizeRoot 3
 #define debug 0
-#define outputSolveSteps 0
+#define outputSolveSteps 1
 
 typedef struct block {
     int blockRow;
