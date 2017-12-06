@@ -86,10 +86,19 @@
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/advancedSolveFunctions.h">
 			<Option target="sudokuSolver"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/main.c">
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/cellFunctions.c">
 			<Option target="sudokuSolver"/>
 		</Unit>
-		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/main.h">
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/cellFunctions.h">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/dangerousCellFunctions.c">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/dangerousCellFunctions.h">
+			<Option target="sudokuSolver"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/main.c">
 			<Option target="sudokuSolver"/>
 		</Unit>
 		<Unit filename="/cygdrive/c/Users/Jamie/CLionProjects/sudokuSolver/patturnSolveFunctions.c">

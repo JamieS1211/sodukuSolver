@@ -150,6 +150,60 @@ advancedSolveFunctions.c.s:
 	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/advancedSolveFunctions.c.s
 .PHONY : advancedSolveFunctions.c.s
 
+cellFunctions.o: cellFunctions.c.o
+
+.PHONY : cellFunctions.o
+
+# target to build an object file
+cellFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/cellFunctions.c.o
+.PHONY : cellFunctions.c.o
+
+cellFunctions.i: cellFunctions.c.i
+
+.PHONY : cellFunctions.i
+
+# target to preprocess a source file
+cellFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/cellFunctions.c.i
+.PHONY : cellFunctions.c.i
+
+cellFunctions.s: cellFunctions.c.s
+
+.PHONY : cellFunctions.s
+
+# target to generate assembly for a file
+cellFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/cellFunctions.c.s
+.PHONY : cellFunctions.c.s
+
+dangerousCellFunctions.o: dangerousCellFunctions.c.o
+
+.PHONY : dangerousCellFunctions.o
+
+# target to build an object file
+dangerousCellFunctions.c.o:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/dangerousCellFunctions.c.o
+.PHONY : dangerousCellFunctions.c.o
+
+dangerousCellFunctions.i: dangerousCellFunctions.c.i
+
+.PHONY : dangerousCellFunctions.i
+
+# target to preprocess a source file
+dangerousCellFunctions.c.i:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/dangerousCellFunctions.c.i
+.PHONY : dangerousCellFunctions.c.i
+
+dangerousCellFunctions.s: dangerousCellFunctions.c.s
+
+.PHONY : dangerousCellFunctions.s
+
+# target to generate assembly for a file
+dangerousCellFunctions.c.s:
+	$(MAKE) -f CMakeFiles/sudokuSolver.dir/build.make CMakeFiles/sudokuSolver.dir/dangerousCellFunctions.c.s
+.PHONY : dangerousCellFunctions.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -270,6 +324,12 @@ help:
 	@echo "... advancedSolveFunctions.o"
 	@echo "... advancedSolveFunctions.i"
 	@echo "... advancedSolveFunctions.s"
+	@echo "... cellFunctions.o"
+	@echo "... cellFunctions.i"
+	@echo "... cellFunctions.s"
+	@echo "... dangerousCellFunctions.o"
+	@echo "... dangerousCellFunctions.i"
+	@echo "... dangerousCellFunctions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

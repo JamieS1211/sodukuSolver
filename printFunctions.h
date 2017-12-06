@@ -3,7 +3,4 @@
 //
 
 void printSudoku(int ***p);
-
-void printSudokuBig(int ***p);
-
 void printSudokuWithSuggestions(int ***p);

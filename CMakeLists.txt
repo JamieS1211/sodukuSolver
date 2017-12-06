@@ -3,6 +3,6 @@ project(sudokuSolver)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES main.c simpleSolveFunctions.c printFunctions.c advancedSolveFunctions.c patturnSolveFunctions.c)
+set(SOURCE_FILES main.c printFunctions.c simpleSolveFunctions.c advancedSolveFunctions.c patturnSolveFunctions.c cellFunctions.c dangerousCellFunctions.c)
 
 add_executable(sudokuSolver ${SOURCE_FILES})

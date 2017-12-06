@@ -1,122 +1,169 @@
 //
 // Created by Jamie on 27/10/2017.
 //
-#include <stdio.h>
 #include <math.h>
-#include "config.h"
-#include "main.h"
+#include <stdio.h>
+#include "global.h"
+#include "cellFunctions.h"
 
-void solveRows(int ***p) {
-    int options = size;
+extern int steps;
 
-    for (int row = 0; row < size; row++) {
-        // Traveling down
+/**
+ * Solves hidden singles in all rows of the given sudoku and returns the amount of changes made
+ *
+ * @param p         Sudoku pointer
+ * @return          Number of changes made
+ */
+int solveRows(int ***p) {
+    Cell cell;
+    Block block;
 
-        // For each row we check every column to scan left to right on each row.
-        int temp[options];
+    int changes = 0;
+
+    for (int row = 0; row < size; row++) { // Traveling down
+        cell.row = row;
 
         // Remove suggestions for values in the same row, column or block.
-        for (int column = 0; column < size; column++) {
-            // Traveling right
-            int value = findFinalCellValue(p, column, row);
-            if (value == 0) {
+        for (int column = 0; column < size; column++) { // Traveling right
+            cell.column = column;
+            setBlockForCell(&block, cell);
+
+            if (findFinalCellValue(p, cell) == 0) {
 
                 // If this is only cell in this row, column or block that can have a value set it to that value
-                for (int option = 1; option <= options; option++) {
-                    if (p[column][row][option] == 1) {
-                        if (cellsWithSuggestionInColumn(p, column, option) == 1
-                            || cellsWithSuggestionInRow(p, row, option) == 1
-                            || cellsWithSuggestionInBlock(p, column, row, option) == 1) {
-                            setOnlyPossible(p, column, row, option);
+                for (int option = 1; option <= size; option++) {
+                    if (p[cell.column][cell.row][option] == 1) {
+                        if (cellsWithSuggestionInColumn(p, cell.column, option) == 1
+                            || cellsWithSuggestionInRow(p, cell.row, option) == 1
+                            || cellsWithSuggestionInBlock(p, block, option) == 1) {
+
+                            steps++;
+                            if (outputSolveSteps) {
+                                printf("[Step %i]: Found and solved hidden single in row %i for cell %i, %i. Setting value to %i \n", steps ,cell.row, cell.column, cell.row, option);
+                            }
+
+                            changes++;
+                            setFinalCalculatedValue(p, cell, option);
                         }
                     }
                 }
-            } else {
-                temp[value] = 1;
-                setOnlyPossible(p, column, row, value);
             }
         }
     }
+
+    return changes;
 }
 
+/**
+ * Solves hidden singles in all columns of the given sudoku and returns the amount of changes made
+ *
+ * @param p         Sudoku pointer
+ * @return          Number of changes made
+ */
+int solveColumns(int ***p) {
+    Cell cell;
+    Block block;
 
-void solveColumns(int ***p) {
-    int options = size;
+    int changes = 0;
 
-    for (int column = 0; column < size; column++) {
-        // Traveling right
+    for (int column = 0; column < size; column++) { // Traveling right
+        cell.column = column;
 
-        // For each column we check every row to scan up to down on each column.
-        int temp[options];
+        for (int row = 0; row < size; row++) { // Traveling down
+            cell.row = row;
+            setBlockForCell(&block, cell);
 
-        for (int row = 0; row < size; row++) {
-            // Traveling down
-            int value = findFinalCellValue(p, column, row);
-            if (value == 0) {
+            if (findFinalCellValue(p, cell) == 0) {
 
                 // If this is only cell in this row, column or block that can have a value set it to that value
-                for (int option = 1; option <= options; option++) {
-                    if (p[column][row][option] == 1) {
-                        if (cellsWithSuggestionInColumn(p, column, option) == 1
-                            || cellsWithSuggestionInRow(p, row, option) == 1
-                            || cellsWithSuggestionInBlock(p, column, row, option) == 1) {
-                            setOnlyPossible(p, column, row, option);
+                for (int option = 1; option <= size; option++) {
+                    if (p[cell.column][cell.row][option] == 1) {
+                        if (cellsWithSuggestionInColumn(p, cell.column, option) == 1
+                            || cellsWithSuggestionInRow(p, cell.row, option) == 1
+                            || cellsWithSuggestionInBlock(p, block, option) == 1) {
+
+                            steps++;
+                            if (outputSolveSteps) {
+                                printf("[Step %i]: Found and solved hidden single in column %i for cell %i, %i. Setting value to %i \n", steps, cell.column, cell.column, cell.row, option);
+                            }
+
+                            setFinalCalculatedValue(p, cell, option);
+                            changes++;
                         }
                     }
                 }
-            } else {
-                temp[value] = 1;
-                setOnlyPossible(p, column, row, value);
             }
         }
-
-
     }
+
+    return changes;
 }
 
-void solveBlocks(int ***p) {
-    int options = size;
+/**
+ * Solves hidden singles in all blocks of the given sudoku and returns the amount of changes made
+ *
+ * @param p         Sudoku pointer
+ * @return          Number of changes made
+ */
+int solveBlocks(int ***p) {
+    Cell cell;
+    Block block;
 
-    for (int c = 0; c < size; c += sizeRoot) {
-        for (int r = 0; r < size; r += sizeRoot) {
+    int changes = 0;
+
+    for (int c = 0; c < sizeRoot; c++) {
+        block.blockColumn = c;
+
+        for (int r = 0; r < sizeRoot; r++) {
+            block.blockRow = r;
 
             for (int columnOffset = 0; columnOffset < sizeRoot; columnOffset++) {
-                for (int rowOffset = 0; rowOffset < sizeRoot; rowOffset++) {
-                    // Option is a possible value of this cell.
-                    int column = c + columnOffset;
-                    int row = r + rowOffset;
-                    int temp[options];
+                cell.column = (block.blockColumn * sizeRoot) + columnOffset;
 
-                    int value = findFinalCellValue(p, column, row);
-                    if (value == 0) {
+                for (int rowOffset = 0; rowOffset < sizeRoot; rowOffset++) {
+                    cell.row = (block.blockRow * sizeRoot) + rowOffset;
+
+                    if (findFinalCellValue(p, cell) == 0) {
 
                         // If this is only cell in this row, column or block that can have a value set it to that value
-                        for (int option = 1; option <= options; option++) {
-                            if (p[column][row][option] == 1) {
-                                if (cellsWithSuggestionInColumn(p, column, option) == 1
-                                    || cellsWithSuggestionInRow(p, row, option) == 1
-                                    || cellsWithSuggestionInBlock(p, column, row, option) == 1) {
-                                    setOnlyPossible(p, column, row, option);
+                        for (int option = 1; option <= size; option++) {
+                            if (p[cell.column][cell.row][option] == 1) {
+                                if (cellsWithSuggestionInColumn(p, cell.column, option) == 1
+                                    || cellsWithSuggestionInRow(p, cell.row, option) == 1
+                                    || cellsWithSuggestionInBlock(p, block, option) == 1) {
+
+                                    steps++;
+                                    if (outputSolveSteps) {
+                                        printf("[Step %i]: Found and solved hidden single in block %i %i for cell %i, %i. Setting value to %i \n", steps, block.blockColumn, block.blockRow, cell.column, cell.row, option);
+                                    }
+
+                                    setFinalCalculatedValue(p, cell, option);
+                                    changes++;
                                 }
                             }
                         }
-                    } else {
-                        temp[value] = 1;
-                        setOnlyPossible(p, column, row, value);
                     }
                 }
             }
-
         }
     }
-    return;
+
+    return changes;
 }
 
-void solveSuggestionBlockLines(int ***p) {
-    Block blocks[sizeRoot];
+/** Finds cell suggestions to the order entered constrained in certain blocks and columns or rows and eliminates suggestions that are in disallowed places then returns the number of changes made
+ *
+ * @param p             Sudoku pointer
+ * @param order         Order of solutions to find
+ * @return              Number of changes made
+ */
+int solveSuggestionBlockLines(int ***p, int order) {
+    Block blocks[order];
     int blocksSelected = 1;
 
-    for (int i = 0; i < pow(size, sizeRoot); i++) {
+    int startSteps = steps;
+
+    for (int i = 0; i < pow(size, order); i++) {
 
         int count = i;
         int correctOrder = 1;
@@ -165,7 +212,9 @@ void solveSuggestionBlockLines(int ***p) {
         }
 
         // If block combination has not been used before and is valid.
-        if (correctOrder && (columnSelection || rowSelection)) {
+        if (blocksSelected == order && correctOrder && (columnSelection || rowSelection)) {
+
+            Cell cell;
 
             if (columnSelection) {
 
@@ -217,8 +266,106 @@ void solveSuggestionBlockLines(int ***p) {
                                         }
                                     }
 
+                                    int madeChange = 0;
+
                                     if (!rowInSelection && (p[(leftColumn * sizeRoot) + c][row][option] == 1)) {
-                                        setIfPossible(p, (leftColumn * sizeRoot) + c, row, option, 0);
+                                        cell.row = row;
+                                        cell.column = (leftColumn * sizeRoot) + c;
+                                        eliminatePossibleFromCell(p, cell, option);
+
+                                        if (!madeChange) {
+                                            madeChange = 1;
+                                            steps++;
+
+                                            if (outputSolveSteps) {
+                                                printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks", steps, order, option);
+
+                                                for (int j = 0; j < blocksSelected; j++) {
+                                                    printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                }
+
+                                                printf("\n");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (rowSelection) {
+
+                int leftrow = blocks[0].blockRow;
+
+                for (int option = 1; option <= size; option++) {
+
+                    int rowsUsed[sizeRoot];
+                    for (int j = 0; j < sizeRoot; j++) {
+                        rowsUsed[j] = 0;
+                    }
+
+
+                    for (int j = 0; j < blocksSelected; j++) {
+
+                        for (int rowOffset = 0; rowOffset < sizeRoot; rowOffset++) {
+                            int row = rowOffset + (blocks[j].blockRow * sizeRoot);
+
+                            for (int columnOffset = 0; columnOffset < sizeRoot; columnOffset++) {
+                                int column = columnOffset + (blocks[j].blockColumn * sizeRoot);
+
+                                if (p[row][column][option] == 1) {
+                                    rowsUsed[rowOffset] = 1;
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+
+                    int usedrowCount = 0;
+                    for (int c = 0; c < sizeRoot; c++) {
+                        if (rowsUsed[c] == 1) {
+                            usedrowCount++;
+                        }
+                    }
+
+                    if (usedrowCount == blocksSelected) {
+                        for (int c = 0; c < sizeRoot; c++) {
+                            if (rowsUsed[c] == 1) {
+
+                                // If this row was used we must eliminate this option from columns of the row that are not in the selected blocks
+                                for (int column = 0; column < size; column++) {
+                                    int columnInSelection = 0;
+                                    for (int j = 0; j < sizeRoot; j++) {
+                                        if (column >= (blocks[j].blockColumn * sizeRoot) && column < (blocks[j].blockColumn + 1) * sizeRoot) {
+                                            columnInSelection = 1;
+                                            break;
+                                        }
+                                    }
+
+                                    int madeChange = 0;
+
+                                    if (!columnInSelection && (p[(leftrow * sizeRoot) + c][column][option] == 1)) {
+                                        cell.column = column;
+                                        cell.row = (leftrow * sizeRoot) + c;
+                                        eliminatePossibleFromCell(p, cell, option);
+
+                                        if (!madeChange) {
+                                            madeChange = 1;
+                                            steps++;
+
+                                            if (outputSolveSteps) {
+                                                printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks", steps, order, option);
+
+                                                for (int j = 0; j < blocksSelected; j++) {
+                                                    printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                }
+
+                                                printf("\n");
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -228,4 +375,6 @@ void solveSuggestionBlockLines(int ***p) {
             }
         }
     }
+
+    return steps - startSteps;
 }

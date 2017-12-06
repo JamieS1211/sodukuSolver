@@ -3,11 +3,12 @@
 //
 #include <stdio.h>
 #include <math.h>
-#include "config.h"
-#include "main.h"
+#include "global.h"
+#include "cellFunctions.h"
 
 //TODO generalise for higher order
 void solveXWing(int ***p) {
+    /*
     for (int columnA = 0; columnA < size; columnA++) {
         for (int columnB = 0; columnB < size; columnB++) {
 
@@ -83,5 +84,5 @@ void solveXWing(int ***p) {
                 }
             }
         }
-    }
+    }*/
 }
