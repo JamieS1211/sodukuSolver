@@ -7,8 +7,13 @@
 #include "global.h"
 #include "cellFunctions.h"
 
+/**
+ * Prints the sudoku leaving spaces for unknown numbers
+ *
+ * @param p             Sudoku pointer
+ */
 void printSudoku(int ***p) {
-    int maxDigitLength = floor(log10(abs(size))) + 1;
+    int maxDigitsInNumber = floor(log10(abs(size))) + 1;
 
     Cell cell;
     int value;
@@ -17,9 +22,9 @@ void printSudoku(int ***p) {
         cell.row = row;
 
         if (row % sizeRoot == 0) {
-            printSolidLine(maxDigitLength);
+            printSolidLine(maxDigitsInNumber);
         } else {
-            printBrokenLine(maxDigitLength);
+            printBrokenLine(maxDigitsInNumber);
         }
 
         for (int column = 0; column < size; column++) {
@@ -35,12 +40,12 @@ void printSudoku(int ***p) {
 
             if (value == 0) {
                 printf("  ");
-                for (int i = 0; i < maxDigitLength; i ++) {
+                for (int i = 0; i < maxDigitsInNumber; i ++) {
                     printf(" ");
                 }
             } else {
                 printf(" %i ", value);
-                int extraDigitSpace = maxDigitLength - (floor(log10(abs(value))) + 1);
+                int extraDigitSpace = maxDigitsInNumber - (floor(log10(abs(value))) + 1);
                 for (int i = 0; i < extraDigitSpace; i++) {
                     printf(" ");
                 }
@@ -49,13 +54,17 @@ void printSudoku(int ***p) {
         printf("¦¦ \n");
     }
 
-    printSolidLine(maxDigitLength);
+    printSolidLine(maxDigitsInNumber);
     printf("\n\n");
 }
 
-
+/**
+ * Prints the sudoku with current suggestions shown where number is not known
+ *
+ * @param p             Sudoku pointer
+ */
 void printSudokuWithSuggestions(int ***p) {
-    int maxDigitLength = floor(log10(abs(size))) + 1;
+    int maxDigitsInNumber = floor(log10(abs(size))) + 1;
 
     Cell cell;
 
@@ -63,9 +72,9 @@ void printSudokuWithSuggestions(int ***p) {
         cell.row = row;
 
         if (row % sizeRoot == 0) {
-            printFullSolidLine(maxDigitLength);
+            printFullSolidLine(maxDigitsInNumber);
         } else {
-            printFullBrokenLine(maxDigitLength);
+            printFullBrokenLine(maxDigitsInNumber);
         }
 
         for (int commentRow = 0; commentRow < sizeRoot; commentRow++) {
@@ -88,26 +97,26 @@ void printSudokuWithSuggestions(int ***p) {
                     if (cellValue == 0) {
                         if (p[column][row][valueToCheck] == 1) {
                             printf(" %i ", valueToCheck);
-                            int extraDigitSpace = maxDigitLength - (floor(log10(abs(valueToCheck))) + 1);
+                            int extraDigitSpace = maxDigitsInNumber - (floor(log10(abs(valueToCheck))) + 1);
                             for (int i = 0; i < extraDigitSpace; i++) {
                                 printf(" ");
                             }
                         } else {
                             printf("  ");
-                            for (int i = 0; i < maxDigitLength; i ++) {
+                            for (int i = 0; i < maxDigitsInNumber; i ++) {
                                 printf(" ");
                             }
                         }
                     } else {
                         if (((1 + size) / 2) == valueToCheck) {
                             printf(" %i ", cellValue);
-                            int extraDigitSpace = maxDigitLength - (floor(log10(abs(cellValue))) + 1);
+                            int extraDigitSpace = maxDigitsInNumber - (floor(log10(abs(cellValue))) + 1);
                             for (int i = 0; i < extraDigitSpace; i++) {
                                 printf(" ");
                             }
                         } else {
                             printf("  ");
-                            for (int i = 0; i < maxDigitLength; i ++) {
+                            for (int i = 0; i < maxDigitsInNumber; i ++) {
                                 printf(" ");
                             }
                         }
@@ -119,11 +128,16 @@ void printSudokuWithSuggestions(int ***p) {
         }
     }
 
-    printFullSolidLine(maxDigitLength);
+    printFullSolidLine(maxDigitsInNumber);
     printf("\n\n");
 }
 
-void printFullSolidLine(int maxDigitLength) {
+/**
+ * Prints long solid line for printing sudoku with suggestions
+ *
+ * @param maxDigitsInNumber        Maximum amount of digits for a number in this sudoku
+ */
+void printFullSolidLine(int maxDigitsInNumber) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -133,7 +147,7 @@ void printFullSolidLine(int maxDigitLength) {
             }
 
             for (int k = 0; k < size; k++) {
-                for (int l = 0; l < maxDigitLength; l++) {
+                for (int l = 0; l < maxDigitsInNumber; l++) {
                     printf("=");
                 }
             }
@@ -142,7 +156,12 @@ void printFullSolidLine(int maxDigitLength) {
     printf("==\n");
 }
 
-void printFullBrokenLine(int maxDigitLength) {
+/**
+ * Prints long dashed line for printing sudoku with suggestions
+ *
+ * @param maxDigitsInNumber        Maximum amount of digits for a number in this sudoku
+ */
+void printFullBrokenLine(int maxDigitsInNumber) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -152,7 +171,7 @@ void printFullBrokenLine(int maxDigitLength) {
             }
 
             for (int k = 0; k < size; k++) {
-                for (int l = 0; l < maxDigitLength; l++) {
+                for (int l = 0; l < maxDigitsInNumber; l++) {
                     printf("-");
                 }
             }
@@ -161,9 +180,12 @@ void printFullBrokenLine(int maxDigitLength) {
     printf("¦¦\n");
 }
 
-
-
-void printSolidLine(int maxDigitLength) {
+/**
+ * Prints solid line for printing sudoku
+ *
+ * @param maxDigitsInNumber        Maximum amount of digits for a number in this sudoku
+ */
+void printSolidLine(int maxDigitsInNumber) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -174,7 +196,7 @@ void printSolidLine(int maxDigitLength) {
 
             printf("==");
             // For every digit make a space
-            for (int k = 0; k < maxDigitLength; k++) {
+            for (int k = 0; k < maxDigitsInNumber; k++) {
                 printf("=");
             }
         }
@@ -182,7 +204,12 @@ void printSolidLine(int maxDigitLength) {
     printf("==\n");
 }
 
-void printBrokenLine(int maxDigitLength) {
+/**
+ * Prints dashed line for printing sudoku
+ *
+ * @param maxDigitsInNumber        Maximum amount of digits for a number in this sudoku
+ */
+void printBrokenLine(int maxDigitsInNumber) {
     for (int i = 0; i < sizeRoot; i++) {
         for (int j = 0; j < sizeRoot; j++) {
             if (j == 0) {
@@ -193,7 +220,7 @@ void printBrokenLine(int maxDigitLength) {
 
             printf("--");
             // For every digit make a space
-            for (int k = 0; k < maxDigitLength; k++) {
+            for (int k = 0; k < maxDigitsInNumber; k++) {
                 printf("-");
             }
         }

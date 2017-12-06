@@ -6,6 +6,8 @@
 #include "global.h"
 #include "cellFunctions.h"
 
+extern int steps;
+
 //TODO generalise for higher order
 void solveXWing(int ***p) {
     /*

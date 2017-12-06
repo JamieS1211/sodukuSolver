@@ -5,10 +5,16 @@
 #include <math.h>
 #include "global.h"
 #include "cellFunctions.h"
-#include "printFunctions.h"
 
 extern int steps;
 
+/**
+ * Organises runs high order column, row and block solving for the given order and returns the number of changes made
+ *
+ * @param p             Sudoku pointer
+ * @param order         Order of solutions to look for
+ * @return              Numnber of changes made
+ */
 int solveHighOrderLinkedCells(int ***p, int order) {
     int changes = 0;
 
@@ -42,6 +48,14 @@ int solveHighOrderLinkedCells(int ***p, int order) {
     return changes;
 }
 
+/**
+ * Solves high order linked cells in the given row for the given order and returns the number of changes made
+ *
+ * @param p             Sudoku pointer
+ * @param row           Row to search
+ * @param order         Order of solutions
+ * @return              Number of changes made
+ */
 int solveHighOrderCellsInRow(int ***p, int row, int order) {
     int startSteps = steps;
 
@@ -315,6 +329,14 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
     return steps - startSteps;
 }
 
+/**
+ * Solves high order linked cells in the given column for the given order and returns the number of changes made
+ *
+ * @param p             Sudoku pointer
+ * @param column        Column to search
+ * @param order         Order of solutions
+ * @return              Number of changes made
+ */
 int solveHighOrderCellsInColumn(int ***p, int column, int order) {
     int startSteps = steps;
 
@@ -579,6 +601,14 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
     return steps - startSteps;
 }
 
+/**
+ * Solves high order linked cells in the given block for the given order and returns the number of changes made
+ *
+ * @param p             Sudoku pointer
+ * @param block         Block to search
+ * @param order         Order of solutions
+ * @return              Number of changes made
+ */
 int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
     int startSteps = steps;
 
