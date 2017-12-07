@@ -183,23 +183,25 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
                                         }
 
                                         if (clearColumn) {
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found naked linked cell of order %i across row in cells",
-                                                           steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found naked linked cell of order %i across row in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < columnsRequired; j++) {
-                                                        printf(" %i, %i ", columns[j], row);
+                                                        for (int j = 0; j < columnsRequired; j++) {
+                                                            printf(" %i, %i ", columns[j], row);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -225,22 +227,25 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
                                         cell.column = columns[j];
 
                                         if (canCellWright(p, cell)) {
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across row in cells", steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across row in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < columnsRequired; j++) {
-                                                        printf(" %i, %i ", columns[j], row);
+                                                        for (int j = 0; j < columnsRequired; j++) {
+                                                            printf(" %i, %i ", columns[j], row);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -280,23 +285,25 @@ int solveHighOrderCellsInRow(int ***p, int row, int order) {
                                     for (int option = 0; option < size; option++) {
                                         if (valuesUsedInCells[option] == 1 && columnsToEliminate[column] == 1) {
 
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across row in cells",
-                                                           steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across row in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < columnsRequired; j++) {
-                                                        printf(" %i, %i ", columns[j], row);
+                                                        for (int j = 0; j < columnsRequired; j++) {
+                                                            printf(" %i, %i ", columns[j], row);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -445,23 +452,25 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
                                         }
 
                                         if (clearRow) {
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found naked linked cell of order %i across column in cells",
-                                                           steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found naked linked cell of order %i across column in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < rowsRequired; j++) {
-                                                        printf(" %i, %i ", column, rows[j]);
+                                                        for (int j = 0; j < rowsRequired; j++) {
+                                                            printf(" %i, %i ", column, rows[j]);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -487,22 +496,25 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
                                         cell.row = rows[j];
 
                                         if (canCellWright(p, cell)) {
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across column in cells", steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across column in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < rowsRequired; j++) {
-                                                        printf(" %i, %i ", column, rows[j]);
+                                                        for (int j = 0; j < rowsRequired; j++) {
+                                                            printf(" %i, %i ", column, rows[j]);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -542,23 +554,25 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
                                     for (int option = 0; option < size; option++) {
                                         if (valuesUsedInCells[option] == 1 && rowsToEliminate[row] == 1) {
 
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across column in cells",
-                                                           steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across column in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < rowsRequired; j++) {
-                                                        printf(" %i, %i ", column, rows[j]);
+                                                        for (int j = 0; j < rowsRequired; j++) {
+                                                            printf(" %i, %i ", column, rows[j]);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -710,22 +724,28 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
                                                 }
 
                                                 if (clearCell) {
-                                                    if (!madeChange) {
-                                                        madeChange = 1;
-                                                        steps++;
+                                                    if (p[cell.column][cell.row][option] == 1) {
+                                                        if (!madeChange) {
+                                                            madeChange = 1;
+                                                            steps++;
 
-                                                        if (outputSolveSteps) {
-                                                            printf("[Step %i]: Found naked linked cell of order %i across block in cells", steps, order);
+                                                            if (outputSolveSteps) {
+                                                                printf("[Step %i]: Found naked linked cell of order %i across block in cells",
+                                                                       steps, order);
 
-                                                            for (int j = 0; j < cellsRequired; j++) {
-                                                                printf(" %i, %i ", (block.blockColumn * sizeRoot) + cellsOffsets[j].column, (block.blockRow * sizeRoot) + cellsOffsets[j].row);
+                                                                for (int j = 0; j < cellsRequired; j++) {
+                                                                    printf(" %i, %i ", (block.blockColumn * sizeRoot) +
+                                                                                       cellsOffsets[j].column,
+                                                                           (block.blockRow * sizeRoot) +
+                                                                           cellsOffsets[j].row);
+                                                                }
+
+                                                                printf("\n");
                                                             }
-
-                                                            printf("\n");
                                                         }
-                                                    }
 
-                                                    eliminatePossibleFromCell(p, cell, option);
+                                                        eliminatePossibleFromCell(p, cell, option);
+                                                    }
                                                 }
                                             }
                                         }
@@ -753,22 +773,27 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
                                         cell.row = (block.blockRow * sizeRoot) + cellsOffsets[j].row;
 
                                         if (canCellWright(p, cell)) {
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across block in cells", steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across block in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < cellsRequired; j++) {
-                                                        printf(" %i, %i ", (block.blockColumn * sizeRoot) + cellsOffsets[j].column, (block.blockRow * sizeRoot) + cellsOffsets[j].row);
+                                                        for (int j = 0; j < cellsRequired; j++) {
+                                                            printf(" %i, %i ", (block.blockColumn * sizeRoot) +
+                                                                               cellsOffsets[j].column,
+                                                                   (block.blockRow * sizeRoot) + cellsOffsets[j].row);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }
@@ -810,22 +835,27 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
                                     for (int option = 0; option < size; option++) {
                                         if (valuesUsedInCells[option] == 1 && cellsToEliminate[position] == 1) {
 
-                                            if (!madeChange) {
-                                                madeChange = 1;
-                                                steps++;
+                                            if (p[cell.column][cell.row][option] == 1) {
+                                                if (!madeChange) {
+                                                    madeChange = 1;
+                                                    steps++;
 
-                                                if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found linked cell of order %i across block in cells", steps, order);
+                                                    if (outputSolveSteps) {
+                                                        printf("[Step %i]: Found linked cell of order %i across block in cells",
+                                                               steps, order);
 
-                                                    for (int j = 0; j < cellsRequired; j++) {
-                                                        printf(" %i, %i ", (block.blockColumn * sizeRoot) + cellsOffsets[j].column, (block.blockRow * sizeRoot) + cellsOffsets[j].row);
+                                                        for (int j = 0; j < cellsRequired; j++) {
+                                                            printf(" %i, %i ", (block.blockColumn * sizeRoot) +
+                                                                               cellsOffsets[j].column,
+                                                                   (block.blockRow * sizeRoot) + cellsOffsets[j].row);
+                                                        }
+
+                                                        printf("\n");
                                                     }
-
-                                                    printf("\n");
                                                 }
-                                            }
 
-                                            eliminatePossibleFromCell(p, cell, option);
+                                                eliminatePossibleFromCell(p, cell, option);
+                                            }
                                         }
                                     }
                                 }

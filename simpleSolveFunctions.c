@@ -1,7 +1,6 @@
 //
 // Created by Jamie on 27/10/2017.
 //
-#include <math.h>
 #include <stdio.h>
 #include "global.h"
 #include "cellFunctions.h"
@@ -19,7 +18,7 @@ int solveRows(int ***p) {
     Cell cell;
     Block block;
 
-    int changes = 0;
+    int startSteps = steps;
 
     for (int row = 0; row < size; row++) { // Traveling down
         cell.row = row;
@@ -43,7 +42,6 @@ int solveRows(int ***p) {
                                 printf("[Step %i]: Found and solved hidden single in row %i for cell %i, %i. Setting value to %i \n", steps ,cell.row, cell.column, cell.row, option);
                             }
 
-                            changes++;
                             setFinalCalculatedValue(p, cell, option);
                         }
                     }
@@ -52,7 +50,7 @@ int solveRows(int ***p) {
         }
     }
 
-    return changes;
+    return steps - startSteps;
 }
 
 /**
@@ -65,7 +63,7 @@ int solveColumns(int ***p) {
     Cell cell;
     Block block;
 
-    int changes = 0;
+    int startSteps = steps;
 
     for (int column = 0; column < size; column++) { // Traveling right
         cell.column = column;
@@ -89,7 +87,6 @@ int solveColumns(int ***p) {
                             }
 
                             setFinalCalculatedValue(p, cell, option);
-                            changes++;
                         }
                     }
                 }
@@ -97,7 +94,7 @@ int solveColumns(int ***p) {
         }
     }
 
-    return changes;
+    return steps - startSteps;
 }
 
 /**
@@ -110,7 +107,7 @@ int solveBlocks(int ***p) {
     Cell cell;
     Block block;
 
-    int changes = 0;
+    int startSteps = steps;
 
     for (int c = 0; c < sizeRoot; c++) {
         block.blockColumn = c;
@@ -139,7 +136,6 @@ int solveBlocks(int ***p) {
                                     }
 
                                     setFinalCalculatedValue(p, cell, option);
-                                    changes++;
                                 }
                             }
                         }
@@ -149,7 +145,7 @@ int solveBlocks(int ***p) {
         }
     }
 
-    return changes;
+    return steps - startSteps;
 }
 
 /** Finds cell suggestions to the order entered constrained in certain blocks and columns or rows and eliminates suggestions that are in disallowed places then returns the number of changes made
@@ -267,21 +263,25 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                     if (!rowInSelection && (p[(leftColumn * sizeRoot) + c][row][option] == 1)) {
                                         cell.row = row;
                                         cell.column = (leftColumn * sizeRoot) + c;
-                                        eliminatePossibleFromCell(p, cell, option);
 
-                                        if (!madeChange) {
-                                            madeChange = 1;
-                                            steps++;
+                                        if (canCellWright(p, cell)) {
+                                            if (!madeChange) {
+                                                madeChange = 1;
+                                                steps++;
 
-                                            if (outputSolveSteps) {
-                                                printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks", steps, order, option);
+                                                if (outputSolveSteps) {
+                                                    printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks",
+                                                           steps, order, option);
 
-                                                for (int j = 0; j < blocksSelected; j++) {
-                                                    printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                    for (int j = 0; j < blocksSelected; j++) {
+                                                        printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                    }
+
+                                                    printf("\n");
                                                 }
-
-                                                printf("\n");
                                             }
+
+                                            eliminatePossibleFromCell(p, cell, option);
                                         }
                                     }
                                 }
@@ -320,14 +320,14 @@ int solveSuggestionBlockLines(int ***p, int order) {
                         }
                     }
 
-                    int usedrowCount = 0;
+                    int usedRowCount = 0;
                     for (int c = 0; c < sizeRoot; c++) {
                         if (rowsUsed[c] == 1) {
-                            usedrowCount++;
+                            usedRowCount++;
                         }
                     }
 
-                    if (usedrowCount == blocksSelected) {
+                    if (usedRowCount == blocksSelected) {
                         for (int c = 0; c < sizeRoot; c++) {
                             if (rowsUsed[c] == 1) {
 
@@ -348,19 +348,24 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                         cell.row = (leftrow * sizeRoot) + c;
                                         eliminatePossibleFromCell(p, cell, option);
 
-                                        if (!madeChange) {
-                                            madeChange = 1;
-                                            steps++;
+                                        if (canCellWright(p, cell)) {
+                                            if (!madeChange) {
+                                                madeChange = 1;
+                                                steps++;
 
-                                            if (outputSolveSteps) {
-                                                printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks", steps, order, option);
+                                                if (outputSolveSteps) {
+                                                    printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks",
+                                                           steps, order, option);
 
-                                                for (int j = 0; j < blocksSelected; j++) {
-                                                    printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                    for (int j = 0; j < blocksSelected; j++) {
+                                                        printf(" %i, %i ", blocks[j].blockColumn, blocks[j].blockRow);
+                                                    }
+
+                                                    printf("\n");
                                                 }
-
-                                                printf("\n");
                                             }
+
+                                            eliminatePossibleFromCell(p, cell, option);
                                         }
                                     }
                                 }

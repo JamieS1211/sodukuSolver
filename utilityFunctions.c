@@ -27,11 +27,9 @@ int nBitCounterAddOne(int bits, int *p, int base) {
 
     for (int i = 0; i < bits; i++) {
         if (p[i] >= base) {
-            if (i < bits - 1) {
-                if (p[i + 1] < base - 1) {
-                    p[i + 1] = p[i + 1] + 1;
-                    p[i] = 0;
-                }
+            if (i < bits - 1 && p[i + 1] < base) {
+                p[i + 1] = p[i + 1] + 1;
+                p[i] = 0;
             }
         }
     }

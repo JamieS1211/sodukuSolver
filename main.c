@@ -41,7 +41,7 @@ int main() {
 
 
 
-    fp = fopen("realSudoku6.txt", "r");
+    fp = fopen("realSudoku144.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
@@ -49,6 +49,10 @@ int main() {
      * 4 - Hard
      */
 
+    if (fp == NULL) {
+        printf("File not found. Program ending\n");
+        exit(0);
+    }
 
     sudoku = xmalloc(size * sizeof(*sudoku));
 
@@ -58,7 +62,6 @@ int main() {
         for (int row = 0; row < size; row++) {
             // Add one so that each place corresponds to the value of its place.
             // Then use place 0 as wright protection.
-            //TODO setup wright protection
             sudoku[column][row] = xmalloc((options + 1) * sizeof(*sudoku[column][row]));
         }
     }
@@ -115,13 +118,13 @@ int main() {
                 changes += solveHighOrderLinkedCells(sudoku, n);
             }
 
-            if (changes == 0 && n <= sizeRoot) {
+            if (changes == 0 && n < sizeRoot) {
                 changes += solveSuggestionBlockLines(sudoku, n);
             }
         }
 
         if (changes == 0) {
-            //change += solveXWing(sudoku);
+            changes += solveXWing(sudoku);
         }
 
         if (changes == 0) {
