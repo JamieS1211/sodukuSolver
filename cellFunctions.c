@@ -30,24 +30,27 @@ void setInitialUnknown(int ***p, Cell cell) {
 }
 
 /**
- * Sets all values of the given cell to possible and returns 1 if found naked single
+ * Sets all values of the given cell to possible
  *
  * @param p             Sudoku pointer
  * @param cell          Cell
- * @return              If naked single was found
  */
+//TODO make more time efficient
 void setupSuggestions(int ***p, Cell cell) {
 
     if (p[cell.column][cell.row][0] == -1) {
 
-        Block block;
-        setBlockForCell(&block, cell);
-
         p[cell.column][cell.row][0] = 0;
         for (int i = 1; i <= size; i++) {
-            if (cellsWithSuggestionInBlock(p, block, i) != -1 && cellsWithSuggestionInColumn(p, cell.column, i) != -1 &&
+            if (cellsWithSuggestionInColumn(p, cell.column, i) != -1 &&
                 cellsWithSuggestionInRow(p, cell.row, i) != -1) {
-                p[cell.column][cell.row][i] = 1;
+
+                Block block;
+                setBlockForCell(&block, cell);
+
+                if (cellsWithSuggestionInBlock(p, block, i) != -1) {
+                    p[cell.column][cell.row][i] = 1;
+                }
             }
         }
 
