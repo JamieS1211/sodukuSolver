@@ -146,7 +146,8 @@ void printFullSolidLine(int maxDigitsInNumber) {
                 printf("=");
             }
 
-            for (int k = 0; k < size; k++) {
+            for (int k = 0; k < sizeRoot; k++) {
+                printf("==");
                 for (int l = 0; l < maxDigitsInNumber; l++) {
                     printf("=");
                 }
@@ -170,7 +171,8 @@ void printFullBrokenLine(int maxDigitsInNumber) {
                 printf("+");
             }
 
-            for (int k = 0; k < size; k++) {
+            for (int k = 0; k < sizeRoot; k++) {
+                printf("--");
                 for (int l = 0; l < maxDigitsInNumber; l++) {
                     printf("-");
                 }

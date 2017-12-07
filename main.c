@@ -41,7 +41,7 @@ int main() {
 
 
 
-    fp = fopen("realSudoku144.txt", "r");
+    fp = fopen("realSudoku6.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
