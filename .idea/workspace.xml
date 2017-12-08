@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="Project and Libraries" />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
       <config projectName="sudokuSolver" targetName="sudokuSolver" />
@@ -12,15 +16,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b68c36d6-0e18-4219-93e2-eb7d25c89a58" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/sudokuSolver.exe" afterPath="$PROJECT_DIR$/cmake-build-debug/sudokuSolver.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/advancedSolveFunctions.c" afterPath="$PROJECT_DIR$/advancedSolveFunctions.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/advancedSolveFunctions.h" afterPath="$PROJECT_DIR$/advancedSolveFunctions.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cellFunctions.c" afterPath="$PROJECT_DIR$/cellFunctions.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cellFunctions.h" afterPath="$PROJECT_DIR$/cellFunctions.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/global.h" afterPath="$PROJECT_DIR$/global.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.c" afterPath="$PROJECT_DIR$/main.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/patturnSolveFunctions.c" afterPath="$PROJECT_DIR$/patturnSolveFunctions.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/patturnSolveFunctions.h" afterPath="$PROJECT_DIR$/patturnSolveFunctions.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpleSolveFunctions.c" afterPath="$PROJECT_DIR$/simpleSolveFunctions.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilityFunctions.c" afterPath="$PROJECT_DIR$/utilityFunctions.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilityFunctions.h" afterPath="$PROJECT_DIR$/utilityFunctions.h" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,55 +36,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+            <state relative-caret-position="261">
+              <caret line="111" column="8" lean-forward="false" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fhandler_console.cc" pinned="false" current-in-tab="false">
-        <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.9.0-3/winsup/cygwin/fhandler_console.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-559">
-              <caret line="2618" column="0" lean-forward="false" selection-start-line="2618" selection-start-column="0" selection-end-line="2618" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utilityFunctions.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utilityFunctions.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="global.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/global.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="advancedSolveFunctions.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="203" selection-end-column="45" />
-              <folding>
-                <element signature="e#41#59#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,43 +51,71 @@
       <file leaf-file-name="simpleSolveFunctions.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simpleSolveFunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4003">
-              <caret line="369" column="37" lean-forward="false" selection-start-line="369" selection-start-column="37" selection-end-line="369" selection-end-column="37" />
-              <folding>
-                <element signature="e#41#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="patturnSolveFunctions.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/patturnSolveFunctions.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-              <folding>
-                <element signature="e#41#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="printFunctions.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/printFunctions.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-69">
-              <caret line="111" column="41" lean-forward="false" selection-start-line="111" selection-start-column="41" selection-end-line="111" selection-end-column="41" />
+            <state relative-caret-position="210">
+              <caret line="271" column="116" lean-forward="false" selection-start-line="271" selection-start-column="116" selection-end-line="271" selection-end-column="116" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="patturnSolveFunctions.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/patturnSolveFunctions.h">
+      <file leaf-file-name="cellFunctions.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cellFunctions.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+            <state relative-caret-position="287">
+              <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cellFunctions.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cellFunctions.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utilityFunctions.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilityFunctions.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utilityFunctions.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilityFunctions.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="186" lean-forward="false" selection-start-line="5" selection-start-column="186" selection-end-line="5" selection-end-column="186" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="advancedSolveFunctions.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="advancedSolveFunctions.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="237" column="66" lean-forward="false" selection-start-line="237" selection-start-column="66" selection-end-line="237" selection-end-column="66" />
+              <folding>
+                <element signature="e#41#59#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,10 +147,10 @@
       <find>findFinalCellValue</find>
       <find>if (!madeChange) {</find>
       <find>eliminatePossibleFromCell</find>
-      <find>if (p[cell.column][cell.row][option] == 1) {</find>
       <find>!madeChange</find>
-      <find>steps++</find>
       <find>changes</find>
+      <find>if (p[cell.column][cell.row][option] == 1) {</find>
+      <find>steps++</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -176,10 +166,8 @@
         <option value="$PROJECT_DIR$/main.h" />
         <option value="$PROJECT_DIR$/config.c" />
         <option value="$PROJECT_DIR$/config.h" />
-        <option value="$PROJECT_DIR$/cellFunctions.h" />
         <option value="$PROJECT_DIR$/simpleSolveFunctions.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/advancedSolveFunctions.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku16.txt" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku1.txt" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku2.txt" />
@@ -205,17 +193,19 @@
         <option value="$PROJECT_DIR$/dangerousCellFunctions.c" />
         <option value="$PROJECT_DIR$/printFunctions.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku25.txt" />
-        <option value="$PROJECT_DIR$/utilityFunctions.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku100.txt" />
         <option value="$PROJECT_DIR$/cmake-build-debug/realSudoku144.txt" />
-        <option value="$PROJECT_DIR$/cellFunctions.c" />
-        <option value="$PROJECT_DIR$/utilityFunctions.c" />
         <option value="$PROJECT_DIR$/printFunctions.c" />
         <option value="$PROJECT_DIR$/patturnSolveFunctions.h" />
-        <option value="$PROJECT_DIR$/advancedSolveFunctions.c" />
         <option value="$PROJECT_DIR$/patturnSolveFunctions.c" />
-        <option value="$PROJECT_DIR$/simpleSolveFunctions.c" />
         <option value="$PROJECT_DIR$/global.h" />
+        <option value="$PROJECT_DIR$/advancedSolveFunctions.h" />
+        <option value="$PROJECT_DIR$/cellFunctions.h" />
+        <option value="$PROJECT_DIR$/utilityFunctions.c" />
+        <option value="$PROJECT_DIR$/utilityFunctions.h" />
+        <option value="$PROJECT_DIR$/advancedSolveFunctions.c" />
+        <option value="$PROJECT_DIR$/cellFunctions.c" />
+        <option value="$PROJECT_DIR$/simpleSolveFunctions.c" />
         <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
@@ -227,7 +217,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -254,11 +244,6 @@
               <item name="sudokuSolver" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="sudokuSolver" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="sudokuSolver" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="sudokuSolver" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -268,6 +253,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -330,26 +316,27 @@
       <workItem from="1512312377730" duration="2668000" />
       <workItem from="1512402563482" duration="2282000" />
       <workItem from="1512404861638" duration="27431000" />
-      <workItem from="1512474948384" duration="60543000" />
+      <workItem from="1512474948384" duration="62420000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152466000" />
+    <option name="totallyTimeSpent" value="154343000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15260416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34040296" sideWeight="0.48541668" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.74867445" sideWeight="0.48541668" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3531283" sideWeight="0.5234375" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.9225875" sideWeight="0.49166667" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.49166667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15260416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.58960766" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43796393" sideWeight="0.4765625" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -358,7 +345,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32979852" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -373,7 +359,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.c</url>
-          <line>139</line>
+          <line>137</line>
           <option name="timeStamp" value="340" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -415,9 +401,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2431">
           <caret line="143" column="10" lean-forward="false" selection-start-line="143" selection-start-column="10" selection-end-line="143" selection-end-column="10" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -636,22 +620,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cellFunctions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="55" column="5" lean-forward="false" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="51" lean-forward="false" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/realSudoku25.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -672,14 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="573">
           <caret line="34" column="51" lean-forward="false" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilityFunctions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="49" lean-forward="false" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
           <folding />
         </state>
       </provider>
@@ -724,47 +684,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cellFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilityFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/printFunctions.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-69">
           <caret line="111" column="41" lean-forward="false" selection-start-line="111" selection-start-column="41" selection-end-line="111" selection-end-column="41" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="203" selection-end-column="45" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simpleSolveFunctions.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4003">
-          <caret line="369" column="37" lean-forward="false" selection-start-line="369" selection-start-column="37" selection-end-line="369" selection-end-column="37" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -788,7 +712,7 @@
     </entry>
     <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.9.0-3/winsup/cygwin/fhandler_console.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-559">
+        <state relative-caret-position="-146">
           <caret line="2618" column="0" lean-forward="false" selection-start-line="2618" selection-start-column="0" selection-end-line="2618" selection-end-column="0" />
           <folding />
         </state>
@@ -797,18 +721,76 @@
     <entry file="file://$PROJECT_DIR$/global.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
+          <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cellFunctions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilityFunctions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilityFunctions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="186" lean-forward="false" selection-start-line="5" selection-start-column="186" selection-end-line="5" selection-end-column="186" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpleSolveFunctions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="271" column="116" lean-forward="false" selection-start-line="271" selection-start-column="116" selection-end-line="271" selection-end-column="116" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/advancedSolveFunctions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="237" column="66" lean-forward="false" selection-start-line="237" selection-start-column="66" selection-end-line="237" selection-end-column="66" />
+          <folding>
+            <element signature="e#41#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="43" column="28" lean-forward="false" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+        <state relative-caret-position="261">
+          <caret line="111" column="8" lean-forward="false" selection-start-line="111" selection-start-column="8" selection-end-line="111" selection-end-column="8" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cellFunctions.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>

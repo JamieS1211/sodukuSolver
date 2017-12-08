@@ -2,7 +2,6 @@
 // Created by Jamie on 27/10/2017.
 //
 #include <stdio.h>
-#include <math.h>
 #include "global.h"
 #include "cellFunctions.h"
 #include "utilityFunctions.h"
@@ -14,7 +13,7 @@ extern int steps;
  *
  * @param p             Sudoku pointer
  * @param order         Order of solutions to look for
- * @return              Numnber of changes made
+ * @return              Number of changes made
  */
 int solveHighOrderLinkedCells(int ***p, int order) {
     int changes = 0;
@@ -520,7 +519,7 @@ int solveHighOrderCellsInColumn(int ***p, int column, int order) {
                                 }
                             }
                         }
-                    } else if (valuesPresentTogether < rowsRequired && rowsRequired > 2) { // Cells must be split between thease x cells
+                    } else if (valuesPresentTogether < rowsRequired && rowsRequired > 2) { // Cells must be split between these x cells
                         int totalValuesBetweenCells = 0;
                         int valuesUsedInCells[size + 1] = {0};
 
@@ -799,7 +798,7 @@ int solveHighOrderCellsInBlock(int ***p, Block block, int order) {
                                 }
                             }
                         }
-                    } else if (valuesPresentTogether < cellsRequired && cellsRequired > 2) { // Cells must be split between thease x cells
+                    } else if (valuesPresentTogether < cellsRequired && cellsRequired > 2) { // Cells must be split between these x cells
                         int totalValuesBetweenCells = 0;
                         int valuesUsedInCells[size + 1] = {0};
 

@@ -7,6 +7,6 @@
  *
  * @param p             Sudoku pointer
  * @param order         Order of solutions to look for
- * @return              Numnber of changes made
+ * @return              Number of changes made
  */
 int solveHighOrderLinkedCells(int ***p, int order);

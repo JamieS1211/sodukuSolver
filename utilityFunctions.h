@@ -3,7 +3,7 @@
 //
 
 /**
- * Counter function that takes bits in a counter, pointer to the counter and base of counting and then returns 1 if the counter has finished and if not returns 0 and increments the coutner by 1
+ * Counter function that takes bits in a counter, pointer to the counter and base of counting and then returns 1 if the counter has finished and if not returns 0 and increments the counter by 1
  *
  * @param bits      Bits in the counter
  * @param p         Pointer to counter

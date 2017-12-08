@@ -12,7 +12,7 @@
 int canCellWright(int ***p, Cell cell);
 
 /**
- * Initialy sets up a cell to be calculated
+ * Initially sets up a cell to be calculated
  *
  * @param p             Sudoku pointer
  * @param cell          Cell

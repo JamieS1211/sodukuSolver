@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
 #include "global.h"
 #include "global.c"
@@ -39,15 +38,16 @@ int main() {
      * 11 - Shows block completion  (naked pair) [5,6 pair remove possibilities of 5 and 6 being in last row of block]
     */
 
-
-
-    fp = fopen("realSudoku144.txt", "r");
     /**
      * 1 - Breezy
      * 2 - Easy
      * 3 - Medium
      * 4 - Hard
      */
+
+
+
+    fp = fopen("realSudoku8.txt", "r");
 
     if (fp == NULL) {
         printf("File not found. Program ending\n");
@@ -107,11 +107,9 @@ int main() {
 
         int changes = 0;
 
-        if (changes == 0) {
-            changes += solveRows(sudoku);
-            changes += solveColumns(sudoku);
-            changes += solveBlocks(sudoku);
-        }
+        changes += solveRows(sudoku);
+        changes += solveColumns(sudoku);
+        changes += solveBlocks(sudoku);
 
         for (int n = 1; n <= size; n++) {
             if (changes == 0 && n > 1) {

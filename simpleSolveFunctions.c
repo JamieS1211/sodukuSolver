@@ -249,6 +249,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
                             if (columnsUsed[c] == 1) {
 
                                 // If this column was used we must eliminate this option from rows of the column that are not in the selected blocks
+                                int madeChange = 0;
                                 for (int row = 0; row < size; row++) {
                                     int rowInSelection = 0;
                                     for (int j = 0; j < sizeRoot; j++) {
@@ -257,8 +258,6 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                             break;
                                         }
                                     }
-
-                                    int madeChange = 0;
 
                                     if (!rowInSelection && (p[(leftColumn * sizeRoot) + c][row][option] == 1)) {
                                         cell.row = row;
@@ -270,7 +269,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                                 steps++;
 
                                                 if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks",
+                                                    printf("[Step %i]: Found constrained row suggestion of order %i eliminated %i from blocks",
                                                            steps, order, option);
 
                                                     for (int j = 0; j < blocksSelected; j++) {
@@ -293,7 +292,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
 
             if (rowSelection) {
 
-                int leftrow = blocks[0].blockRow;
+                int leftRow = blocks[0].blockRow;
 
                 for (int option = 1; option <= size; option++) {
 
@@ -332,6 +331,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
                             if (rowsUsed[c] == 1) {
 
                                 // If this row was used we must eliminate this option from columns of the row that are not in the selected blocks
+                                int madeChange = 0;
                                 for (int column = 0; column < size; column++) {
                                     int columnInSelection = 0;
                                     for (int j = 0; j < sizeRoot; j++) {
@@ -341,11 +341,9 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                         }
                                     }
 
-                                    int madeChange = 0;
-
-                                    if (!columnInSelection && (p[(leftrow * sizeRoot) + c][column][option] == 1)) {
+                                    if (!columnInSelection && (p[(leftRow * sizeRoot) + c][column][option] == 1)) {
                                         cell.column = column;
-                                        cell.row = (leftrow * sizeRoot) + c;
+                                        cell.row = (leftRow * sizeRoot) + c;
                                         eliminatePossibleFromCell(p, cell, option);
 
                                         if (canCellWright(p, cell)) {
@@ -354,7 +352,7 @@ int solveSuggestionBlockLines(int ***p, int order) {
                                                 steps++;
 
                                                 if (outputSolveSteps) {
-                                                    printf("[Step %i]: Found constrained row suggestion of order eliminated %i from blocks",
+                                                    printf("[Step %i]: Found constrained row suggestion of order %i eliminated %i from blocks",
                                                            steps, order, option);
 
                                                     for (int j = 0; j < blocksSelected; j++) {

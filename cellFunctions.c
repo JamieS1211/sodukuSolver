@@ -20,7 +20,7 @@ int canCellWright(int ***p, Cell cell) {
 }
 
 /**
- * Initialy sets up a cell to be calculated
+ * Initially sets up a cell to be calculated
  *
  * @param p             Sudoku pointer
  * @param cell          Cell
@@ -85,7 +85,7 @@ void setFinalCalculatedValue(int ***p, Cell cell, int number) {
     p[cell.column][cell.row][number] = 1;
 
     if (debug) {
-        printf("Set cell %i %i to final value of %i\n", number, cell.column, cell.row, number);
+        printf("Set cell %i %i to final value of %i\n", cell.column, cell.row, number);
     }
 }
 
