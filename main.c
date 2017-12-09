@@ -45,9 +45,7 @@ int main() {
      * 4 - Hard
      */
 
-
-
-    fp = fopen("realSudoku8.txt", "r");
+    fp = fopen("realSudoku144.txt", "r");
 
     if (fp == NULL) {
         printf("File not found. Program ending\n");
@@ -67,6 +65,10 @@ int main() {
     }
 
     Cell cell;
+
+    int msec = 0, trigger = 10; /* 10ms */
+    clock_t before = clock();
+
     for (int row = 0; row < size; row++) {
         int input[size];
         cell.row = row;
@@ -103,6 +105,18 @@ int main() {
          }
     }
 
+    for (int column = 0; column < size; column++) {
+        cell.column = column;
+
+         for (int row = 0; row < size; row++) {
+             cell.row = row;
+
+             if (sudoku[cell.column][cell.row][0] == 1) {
+                 setFinalCalculatedValue(sudoku, cell, findFinalCellValue(sudoku, cell));
+             }
+         }
+    }
+
     while (!isComplete(sudoku)) {
 
         int changes = 0;
@@ -129,12 +143,22 @@ int main() {
             printf("Unable to solve the sudoku entered, will print current progress. Steps complete = %i. Program will end. \n", steps);
             printSudokuWithSuggestions(sudoku);
             printSudoku(sudoku);
+
+            clock_t difference = clock() - before;
+            msec = difference * 1000 / CLOCKS_PER_SEC;
+            printf("Time taken %d seconds %d milliseconds\n", msec/1000, msec%1000);
+
             return 1;
         }
     }
 
     printf("\nSudoku has been completed after %i steps\n", steps);
     printSudoku(sudoku);
+
+    clock_t difference = clock() - before;
+    msec = difference * 1000 / CLOCKS_PER_SEC;
+    printf("Time taken %d seconds %d milliseconds\n", msec/1000, msec%1000);
+
     return 0;
 }
 

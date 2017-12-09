@@ -1,5 +1,5 @@
-#define size 9
-#define sizeRoot 3
+#define size 144
+#define sizeRoot 12
 #define debug 0
 #define outputSolveSteps 1
 

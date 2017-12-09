@@ -35,26 +35,14 @@ void setInitialUnknown(int ***p, Cell cell) {
  * @param p             Sudoku pointer
  * @param cell          Cell
  */
-//TODO make more time efficient
 void setupSuggestions(int ***p, Cell cell) {
 
     if (p[cell.column][cell.row][0] == -1) {
 
         p[cell.column][cell.row][0] = 0;
         for (int i = 1; i <= size; i++) {
-            if (cellsWithSuggestionInColumn(p, cell.column, i) != -1 &&
-                cellsWithSuggestionInRow(p, cell.row, i) != -1) {
-
-                Block block;
-                setBlockForCell(&block, cell);
-
-                if (cellsWithSuggestionInBlock(p, block, i) != -1) {
-                    p[cell.column][cell.row][i] = 1;
-                }
-            }
+            p[cell.column][cell.row][i] = 1;
         }
-
-        suggestionsInCell(p, cell);
     }
 }
 
@@ -81,7 +69,9 @@ void setFinalCalculatedValue(int ***p, Cell cell, int number) {
     clearCellOfOtherValues(p, cell, number);
     clearRegionOfFinalValue(p, cell, number);
 
-    p[cell.column][cell.row][0] = 2; // Wright protect 1= setup value 2= final calculated value
+    if (p[cell.column][cell.row][0] != 1) {
+        p[cell.column][cell.row][0] = 2; // Wright protect 1= setup value 2= final calculated value
+    }
     p[cell.column][cell.row][number] = 1;
 
     if (debug) {
